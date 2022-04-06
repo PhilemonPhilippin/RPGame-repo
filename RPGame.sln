@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32328.378
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RPGame.ConsoleAPP", "RPGame.ConsoleAPP\RPGame.ConsoleAPP.csproj", "{A15FBDE8-27AE-4B46-BE9C-F79B76A2612D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RPGame.Entities", "RPGame.Entities\RPGame.Entities.csproj", "{290AD0CC-62F7-4615-877A-47FADBBCB1FC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A15FBDE8-27AE-4B46-BE9C-F79B76A2612D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A15FBDE8-27AE-4B46-BE9C-F79B76A2612D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A15FBDE8-27AE-4B46-BE9C-F79B76A2612D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A15FBDE8-27AE-4B46-BE9C-F79B76A2612D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{290AD0CC-62F7-4615-877A-47FADBBCB1FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{290AD0CC-62F7-4615-877A-47FADBBCB1FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{290AD0CC-62F7-4615-877A-47FADBBCB1FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{290AD0CC-62F7-4615-877A-47FADBBCB1FC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5F0D179E-6C80-4838-9AF4-D911A8DF2D32}
+	EndGlobalSection
+EndGlobal
