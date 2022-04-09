@@ -1,6 +1,6 @@
-﻿namespace RPGame.Entities.Character
+﻿namespace RPGame.Entities.Character.Hero
 {
-    public class Player
+    public class Hero
     {
         private string _name;
 

@@ -1,4 +1,5 @@
-﻿using RPGame.Entities.Character;
+﻿using RPGame.Entities.Character.Hero;
+using RPGame.Entities.Character.Monster;
 
 namespace RPGame.Entities.Game
 {
@@ -6,7 +7,8 @@ namespace RPGame.Entities.Game
     {
         public void Run()
         {
-            Player player = new Player(GetPlayerName());
+            Hero hero = new Human(GetPlayerName());
+            Monster wolf = new Wolf();
 
         }
 

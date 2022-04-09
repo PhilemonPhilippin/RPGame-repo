@@ -6,7 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Character\Monster\" />
     <Folder Include="Item\" />
     <Folder Include="Zone\" />
   </ItemGroup>
