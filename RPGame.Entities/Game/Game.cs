@@ -25,22 +25,14 @@ namespace RPGame.Entities.Game
 
         public void Encounter(Hero hero, Monster monster)
         {
+            Console.WriteLine("=========================================");
             Console.WriteLine($"You encounter a wild {monster.Name}.");
             string choice = AskFightOrRun();
-            bool isEncounterEnded = false;
-            while (!isEncounterEnded)
-            {
-                if (choice == "run")
-                {
-                    HasRunAway(hero, 10);
-                    isEncounterEnded = true;
-                }
-                else
-                {
-                    Fight(hero, monster);
-                }
-            }
-
+            if (choice == "run")
+                HasRunAway(hero, 10);
+            else
+                Fight(hero, monster);
+            Console.WriteLine("The encounter is over.");
         }
         public string AskFightOrRun()
         {
@@ -69,16 +61,14 @@ namespace RPGame.Entities.Game
         }
         public void Fight(Hero hero, Monster monster)
         {
-            bool isFightEnded = false;
-            while (!isFightEnded)
+            while (hero.Health != 0 && monster.Health != 0)
             {
                 string heroAction = AskFightAction();
                 HeroAction(hero, monster, heroAction);
-                if (heroAction == "run")
-                    isFightEnded = true;
+                Console.WriteLine($"Monster health: {monster.Health}");
                 MonsterAction(hero, monster);
+                Console.WriteLine($"Hero health: {hero.Health}");
             }
-
         }
         public string AskFightAction()
         {
@@ -86,11 +76,12 @@ namespace RPGame.Entities.Game
             bool isHeroActionValid;
             do
             {
-                Console.WriteLine("Chose a fight action:");
+                Console.WriteLine("=========================================");
+                Console.WriteLine("Choose a fight action:");
                 Console.WriteLine("Write 'attack' to perform an attack. Write 'prepare' to prepare yourself for a great attack (damage of next attack will be bigger)");
                 Console.WriteLine("Write 'block' to block the next monster's attack.");
                 Console.WriteLine("Write 'spell' to cast a spell. Or write 'potion' to drink a mana potion.");
-                Console.WriteLine("Write 'run' to try to run. If you fail to run away, you die instantly.");
+                Console.WriteLine("Write 'run' to try to run. If you fail to run away, you die instantly ...");
                 heroAction = Console.ReadLine().ToLower();
                 isHeroActionValid = heroAction == "attack" || heroAction == "prepare" || heroAction == "block" || heroAction == "spell" || heroAction == "potion" || heroAction == "run";
             } while (!isHeroActionValid);
@@ -102,6 +93,7 @@ namespace RPGame.Entities.Game
             {
                 case "attack":
                     Console.WriteLine("You perform an attack");
+                    monster.Health -= hero.Damage;
                     break;
                 case "prepare":
                     Console.WriteLine("You prepare a great attack");
@@ -116,7 +108,8 @@ namespace RPGame.Entities.Game
                     Console.WriteLine("You drink a mana potion");
                     break;
                 case "run":
-                    Console.WriteLine("You run");
+                    Console.WriteLine("You try to run");
+                    HasRunAway(hero, 5);
                     break;
                 default:
                     Console.WriteLine("Invalid action.");
@@ -134,6 +127,7 @@ namespace RPGame.Entities.Game
             else if (monsterDice == 2)
             {
                 Console.WriteLine("The monster performs an attack on you.");
+                hero.Health -= monster.Damage;
             }
             else
             {
