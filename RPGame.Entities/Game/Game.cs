@@ -17,8 +17,8 @@ namespace RPGame.Entities.Game
             Console.WriteLine("Welcome, adventurer. Welcome in this cruel and merciless world.");
             Console.WriteLine("You finally came out of your peaceful village.");
             Console.WriteLine("Prepare yourself to face terrible dangers and encounter terriyfing monsters.");
-            Console.WriteLine("However, if you survive long enough, you will become powerful... and rich beyond your imagination.");
-            Console.WriteLine("By the way... What is your name, peasant ? ...");
+            Console.WriteLine("However, if you survive long enough, you will become powerful.. and rich beyond your imagination.");
+            Console.WriteLine("By the way, what is your name, peasant ? ...");
             string name = Console.ReadLine();
             return name;
         }
@@ -29,7 +29,7 @@ namespace RPGame.Entities.Game
             Console.WriteLine($"You encounter a wild {monster.Name}.");
             string choice = AskFightOrRun();
             if (choice == "run")
-                HasRunAway(hero, 10);
+                TryToRunAway(hero, 5);
             else
                 Fight(hero, monster);
             Console.WriteLine("The encounter is over.");
@@ -44,32 +44,38 @@ namespace RPGame.Entities.Game
             } while (heroChoice != "fight" && heroChoice != "run");
             return heroChoice;
         }
-        public bool HasRunAway(Hero hero, int diceFaces)
+        public void TryToRunAway(Hero hero, int diceFaces)
         {
-            bool hasRunAway = true;
             Random random = new Random();
             int dice = random.Next(1, diceFaces + 1);
             if (dice == 1)
             {
                 Console.WriteLine("You turn your back, try to run away but get executed.");
                 hero.Health = 0;
-                hasRunAway = false;
             }
             else
                 Console.WriteLine("You run away.");
-            return hasRunAway;
         }
         public void Fight(Hero hero, Monster monster)
         {
             hero.DamageStack = hero.Damage;
             monster.DamageStack = monster.Damage;
+            bool isHerosTurn = true;
             while (hero.Health != 0 && monster.Health != 0)
             {
-                string heroAction = AskFightAction();
-                HeroAction(hero, monster, heroAction);
-                Console.WriteLine($"Monster health: {monster.Health}");
-                MonsterAction(hero, monster);
-                Console.WriteLine($"Hero health: {hero.Health}");
+                if (isHerosTurn)
+                {
+                    string heroAction = AskFightAction();
+                    HeroAction(hero, monster, heroAction);
+                    Console.WriteLine($"Monster health: {monster.Health}");
+                    isHerosTurn = false;
+                }
+                else
+                {
+                    MonsterAction(hero, monster);
+                    Console.WriteLine($"Hero health: {hero.Health}");
+                    isHerosTurn = true;
+                }
             }
         }
         public string AskFightAction()
@@ -80,7 +86,8 @@ namespace RPGame.Entities.Game
             {
                 Console.WriteLine("=========================================");
                 Console.WriteLine("Choose a fight action:");
-                Console.WriteLine("Write 'attack' to perform an attack. Write 'prepare' to prepare yourself for a great attack (damage of next attack will be bigger)");
+                Console.WriteLine("Write 'attack' to perform an attack.");
+                Console.WriteLine("Write 'prepare' to prepare yourself for a great attack (damage of next attack will be bigger)");
                 Console.WriteLine("Write 'block' to block the next monster's attack.");
                 Console.WriteLine("Write 'spell' to cast a spell. Or write 'potion' to drink a mana potion.");
                 Console.WriteLine("Write 'run' to try to run. If you fail to run away, you die instantly ...");
@@ -95,25 +102,28 @@ namespace RPGame.Entities.Game
             {
                 case "attack":
                     Console.WriteLine("You perform an attack");
-                    monster.Health -= hero.DamageStack;
+                    if (hero.DamageStack - monster.BlockStack > 0)
+                        monster.Health -= hero.DamageStack - monster.BlockStack;
                     hero.DamageStack = hero.Damage;
+                    monster.BlockStack = 0;
                     break;
                 case "prepare":
                     Console.WriteLine("You prepare a great attack");
                     hero.DamageStack *= 3;
                     break;
                 case "block":
-                    Console.WriteLine("You block");
+                    Console.WriteLine("You will block the next attack.");
+                    hero.BlockStack += hero.Block;
                     break;
                 case "spell":
-                    Console.WriteLine("You cast a spell");
+                    Console.WriteLine("You cast a spell.");
                     break;
                 case "potion":
-                    Console.WriteLine("You drink a mana potion");
+                    Console.WriteLine("You drink a mana potion.");
                     break;
                 case "run":
-                    Console.WriteLine("You try to run");
-                    HasRunAway(hero, 5);
+                    Console.WriteLine("You try to run away.");
+                    TryToRunAway(hero, 3);
                     break;
                 default:
                     Console.WriteLine("Invalid action.");
@@ -123,16 +133,19 @@ namespace RPGame.Entities.Game
         public void MonsterAction(Hero hero, Monster monster)
         {
             Random random = new Random();
-            int monsterDice = random.Next(1, 4);
-            if (monsterDice == 1)
+            int dice = random.Next(1, 4);
+            if (dice == 1)
             {
                 Console.WriteLine("The monster will block the next attack.");
+                monster.BlockStack += monster.Block;
             }
-            else if (monsterDice == 2)
+            else if (dice == 2)
             {
                 Console.WriteLine("The monster performs an attack on you.");
-                hero.Health -= monster.DamageStack;
+                if (monster.DamageStack - hero.BlockStack > 0)
+                    hero.Health -= monster.DamageStack - hero.BlockStack;
                 monster.DamageStack = monster.Damage;
+                hero.BlockStack = 0;
             }
             else
             {
