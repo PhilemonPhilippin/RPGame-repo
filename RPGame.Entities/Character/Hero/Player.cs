@@ -107,22 +107,5 @@
             get { return _gold; }
             set { _gold = value; }
         }
-
-        public Player(string name)
-        {
-            Name = name;
-            Health = 100;
-            Mana = 100;
-            Damage = 15;
-            Block = 10;
-            Experience = 0;
-            Level = 1;
-            Incarnation = 5;
-            Gold = 15;
-        }
-
-
-
-
     }
 }
