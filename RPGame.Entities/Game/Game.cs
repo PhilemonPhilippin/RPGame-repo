@@ -61,6 +61,8 @@ namespace RPGame.Entities.Game
         }
         public void Fight(Hero hero, Monster monster)
         {
+            hero.DamageStack = hero.Damage;
+            monster.DamageStack = monster.Damage;
             while (hero.Health != 0 && monster.Health != 0)
             {
                 string heroAction = AskFightAction();
@@ -93,10 +95,12 @@ namespace RPGame.Entities.Game
             {
                 case "attack":
                     Console.WriteLine("You perform an attack");
-                    monster.Health -= hero.Damage;
+                    monster.Health -= hero.DamageStack;
+                    hero.DamageStack = hero.Damage;
                     break;
                 case "prepare":
                     Console.WriteLine("You prepare a great attack");
+                    hero.DamageStack *= 3;
                     break;
                 case "block":
                     Console.WriteLine("You block");
@@ -127,11 +131,13 @@ namespace RPGame.Entities.Game
             else if (monsterDice == 2)
             {
                 Console.WriteLine("The monster performs an attack on you.");
-                hero.Health -= monster.Damage;
+                hero.Health -= monster.DamageStack;
+                monster.DamageStack = monster.Damage;
             }
             else
             {
                 Console.WriteLine("The monster prepare a great attack. Its next attack will do more damage.");
+                monster.DamageStack *= 3;
             }
         }
 
