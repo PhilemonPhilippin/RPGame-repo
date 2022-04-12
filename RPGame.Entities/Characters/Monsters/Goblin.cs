@@ -1,4 +1,4 @@
-﻿namespace RPGame.Entities.Character.Monster
+﻿namespace RPGame.Entities.Characters.Monsters
 {
     public class Goblin : Monster
     {

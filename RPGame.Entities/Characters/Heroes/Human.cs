@@ -1,4 +1,4 @@
-﻿namespace RPGame.Entities.Character.Hero
+﻿namespace RPGame.Entities.Characters.Heroes
 {
     public class Human : Hero
     {
@@ -6,7 +6,10 @@
         {
             Name = name;
             Health = 100;
+            MaxHealth = Health;
             Mana = 100;
+            MaxMana = Mana;
+            ManaPotion = 2;
             Damage = 20;
             Block = 10;
             Experience = 0;

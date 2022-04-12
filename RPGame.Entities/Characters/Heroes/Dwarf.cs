@@ -1,4 +1,4 @@
-﻿namespace RPGame.Entities.Character.Hero
+﻿namespace RPGame.Entities.Characters.Heroes
 {
     public class Dwarf : Hero
     {

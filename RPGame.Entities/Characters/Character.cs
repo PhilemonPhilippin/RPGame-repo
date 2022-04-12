@@ -1,4 +1,4 @@
-﻿namespace RPGame.Entities.Character
+﻿namespace RPGame.Entities.Characters
 {
     public class Character
     {
