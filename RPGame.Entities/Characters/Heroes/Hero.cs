@@ -248,31 +248,5 @@ namespace RPGame.Entities.Characters.Heroes
                     break;
             }
         }
-
-        //public void MonsterAction(Hero hero, Monster monster)
-        //{
-        //    Random random = new Random();
-        //    int dice = random.Next(1, 4);
-        //    if (dice == 1)
-        //    {
-        //        Console.WriteLine("The monster will block the next attack.");
-        //        monster.BlockStack += monster.Block;
-        //    }
-        //    else if (dice == 2)
-        //    {
-        //        Console.WriteLine("The monster performs an attack on you.");
-        //        if (monster.DamageStack - hero.BlockStack > 0)
-        //            hero.Health -= monster.DamageStack - hero.BlockStack;
-        //        monster.DamageStack = monster.Damage;
-        //        hero.BlockStack = 0;
-        //    }
-        //    else
-        //    {
-        //        Console.WriteLine("The monster prepare a great attack. Its next attack will do more damage.");
-        //        monster.DamageStack *= 2.5;
-        //    }
-        //}
-
-
     }
 }
