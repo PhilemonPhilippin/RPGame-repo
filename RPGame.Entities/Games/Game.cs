@@ -8,8 +8,11 @@ namespace RPGame.Entities.Games
         public void Run()
         {
             Hero hero = new Human(GetHeroName());
-            Monster wolf = new Wolf();
-            hero.Encounter(wolf);
+            while (hero.Incarnation >= 0)
+            {
+                Monster wolf = new Wolf();
+                hero.Encounter(wolf);
+            }
         }
 
         public string GetHeroName()

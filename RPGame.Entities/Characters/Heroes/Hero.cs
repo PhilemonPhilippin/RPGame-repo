@@ -87,8 +87,8 @@ namespace RPGame.Entities.Characters.Heroes
             get { return _incarnation; }
             set 
             {
-                if (value < 0)
-                    _incarnation = 0;
+                if (value < -1)
+                    _incarnation = -1;
                 else
                     _incarnation = value; 
             }
@@ -103,9 +103,28 @@ namespace RPGame.Entities.Characters.Heroes
                 TryToRunAway(5);
             else
                 Fight(monster);
+            if (monster.Health == 0)
+            {
+                Console.WriteLine("You have slain the monster.");
+                this.LevelUp();
+                this.Gold += monster.Gold;
+                this.Experience += monster.Fame;
+                this.Health = this.MaxHealth;
+                this.Mana = this.MaxMana;
+                Console.WriteLine($"Your Health: {this.Health}, your mana: {this.Mana}, your gold: {this.Gold}, your XP: {this.Experience}, your lvl: {this.Level}");
+            }
+            else if (this.Health == 0)
+            {
+                Console.WriteLine("The monster destroyed you.");
+                this.Incarnation--;
+                this.Health = this.MaxHealth;
+                this.Mana = this.MaxMana;
+                Console.WriteLine($"You have {this.Incarnation} incarnation left.");
+                Console.WriteLine($"Your Health: {this.Health}, your mana: {this.Mana}, your gold: {this.Gold}, your XP: {this.Experience}, your lvl: {this.Level}");
+            }
             Console.WriteLine("The encounter is over.");
         }
-        public string AskFightOrRun()
+        private string AskFightOrRun()
         {
             string heroChoice;
             do
@@ -115,7 +134,7 @@ namespace RPGame.Entities.Characters.Heroes
             } while (heroChoice != "fight" && heroChoice != "run");
             return heroChoice;
         }
-        public void TryToRunAway(int diceFaces)
+        private void TryToRunAway(int diceFaces)
         {
             Random random = new Random();
             int dice = random.Next(1, diceFaces + 1);
@@ -127,7 +146,7 @@ namespace RPGame.Entities.Characters.Heroes
             else
                 Console.WriteLine("You run away.");
         }
-        public void Fight(Monster monster)
+        private void Fight(Monster monster)
         {
             this.DamageStack = this.Damage;
             monster.DamageStack = monster.Damage;
@@ -149,7 +168,7 @@ namespace RPGame.Entities.Characters.Heroes
                 }
             }
         }
-        public string AskFightAction()
+        private string AskFightAction()
         {
             string heroAction;
             bool isHeroActionValid;
@@ -167,7 +186,7 @@ namespace RPGame.Entities.Characters.Heroes
             } while (!isHeroActionValid);
             return heroAction;
         }
-        public void CastSpell()
+        private void CastSpell()
         {
             string spell;
             do
@@ -185,7 +204,7 @@ namespace RPGame.Entities.Characters.Heroes
                 }
             } while (spell != "heal");
         }
-        public void Heal()
+        private void Heal()
         {
             if (this.Mana < 50)
                 Console.WriteLine("You don't have enough mana to heal yourself. You need 50 mana.");
@@ -199,7 +218,7 @@ namespace RPGame.Entities.Characters.Heroes
                 Console.WriteLine("You heal yourself.");
             }
         }
-        public void DrinkManaPotion()
+        private void DrinkManaPotion()
         {
             if (this.ManaPotion <= 0)
                 Console.WriteLine("You don't have any mana potion left.");
@@ -213,7 +232,7 @@ namespace RPGame.Entities.Characters.Heroes
                 Console.WriteLine("You drink a mana potion");
             }
         }
-        public void HeroAction(Monster monster, string heroAction)
+        private void HeroAction(Monster monster, string heroAction)
         {
             switch (heroAction)
             {
@@ -246,6 +265,18 @@ namespace RPGame.Entities.Characters.Heroes
                 default:
                     Console.WriteLine("Invalid action.");
                     break;
+            }
+        }
+        private void LevelUp()
+        {
+            if (this.Experience >= 100)
+            {
+                this.Level++;
+                this.MaxHealth += 15;
+                this.MaxMana += 15;
+                this.Incarnation++;
+                this.Experience = 0;
+                Console.WriteLine("Congratulations, you level up!");
             }
         }
     }

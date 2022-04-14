@@ -3,6 +3,15 @@ namespace RPGame.Entities.Characters.Monsters
 {
     public class Monster : Character
     {
+        private int _fame;
+
+        public int Fame
+        {
+            get { return _fame; }
+            set { _fame = value; }
+        }
+
+
         public void MonsterAction(Hero hero)
         {
             Random random = new Random();
