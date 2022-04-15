@@ -11,10 +11,10 @@
             MaxMana = Mana;
             ManaPotion = 2;
             Damage = 20;
-            Block = 10;
+            Block = 15;
             Experience = 0;
             Level = 1;
-            Incarnation = 5;
+            Incarnation = 3;
             Gold = 15;
         }
 

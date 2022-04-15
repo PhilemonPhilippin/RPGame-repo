@@ -8,8 +8,8 @@
             Health = 80;
             Damage = 15;
             Block = 8;
-            Gold = 10;
-            Fame = 25;
+            Gold = 15;
+            Fame = 15;
         }
     }
 }

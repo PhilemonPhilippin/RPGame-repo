@@ -11,6 +11,7 @@ namespace RPGame.Entities.Characters.Monsters
             set { _fame = value; }
         }
 
+       
 
         public void MonsterAction(Hero hero)
         {

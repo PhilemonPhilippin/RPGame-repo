@@ -106,9 +106,9 @@ namespace RPGame.Entities.Characters.Heroes
             if (monster.Health == 0)
             {
                 Console.WriteLine("You have slain the monster.");
-                this.LevelUp();
                 this.Gold += monster.Gold;
                 this.Experience += monster.Fame;
+                this.LevelUp();
                 this.Health = this.MaxHealth;
                 this.Mana = this.MaxMana;
                 Console.WriteLine($"Your Health: {this.Health}, your mana: {this.Mana}, your gold: {this.Gold}, your XP: {this.Experience}, your lvl: {this.Level}");
@@ -129,7 +129,7 @@ namespace RPGame.Entities.Characters.Heroes
             string heroChoice;
             do
             {
-                Console.WriteLine("Do you want to fight, or to try to run away? Note that if you fail to run away, you die instantly. Write 'fight' or 'run' ...");
+                Console.WriteLine("Do you want to fight, or to try to run away? Note that if you fail to run away, you die instantly. Write 'fight' or 'run'...");
                 heroChoice = Console.ReadLine().ToLower();
             } while (heroChoice != "fight" && heroChoice != "run");
             return heroChoice;
@@ -180,7 +180,7 @@ namespace RPGame.Entities.Characters.Heroes
                 Console.WriteLine("Write 'prepare' to prepare yourself for a great attack.");
                 Console.WriteLine("Write 'block' to block the next monster's attack.");
                 Console.WriteLine("Write 'spell' to cast a spell. Or write 'potion' to drink a mana potion.");
-                Console.WriteLine("Write 'run' to try to run. If you fail to run away, you die instantly ...");
+                Console.WriteLine("Write 'run' to try to run. If you fail to run away, you die instantly...");
                 heroAction = Console.ReadLine().ToLower();
                 isHeroActionValid = heroAction == "attack" || heroAction == "prepare" || heroAction == "block" || heroAction == "spell" || heroAction == "potion" || heroAction == "run";
             } while (!isHeroActionValid);
@@ -191,7 +191,7 @@ namespace RPGame.Entities.Characters.Heroes
             string spell;
             do
             {
-                Console.WriteLine("Write 'heal' to cast a healing spell on yourself");
+                Console.WriteLine("Write 'heal' to cast a healing spell on yourself...");
                 spell = Console.ReadLine().ToLower();
                 switch (spell)
                 {
@@ -275,7 +275,7 @@ namespace RPGame.Entities.Characters.Heroes
                 this.MaxHealth += 15;
                 this.MaxMana += 15;
                 this.Incarnation++;
-                this.Experience = 0;
+                this.Experience -= 100;
                 Console.WriteLine("Congratulations, you level up!");
             }
         }
