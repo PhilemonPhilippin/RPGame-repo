@@ -1,0 +1,8 @@
+﻿CREATE TABLE [dbo].[Battle]
+(
+	[Id] INT NOT NULL IDENTITY,
+	[HeroName] VARCHAR(50) NOT NULL,
+	[MonsterName] VARCHAR(50) NOT NULL,
+	[HasHeroWon] BIT NOT NULL,
+	CONSTRAINT PK_Battle PRIMARY KEY ([Id])
+)

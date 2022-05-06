@@ -1,5 +1,6 @@
 ﻿using RPGame.Entities.Characters.Heroes;
 using RPGame.Entities.Characters.Monsters;
+using RPGame.Services;
 
 namespace RPGame.Entities.Games
 {
@@ -10,11 +11,14 @@ namespace RPGame.Entities.Games
         {
             string heroName = GetHeroName();
             bool isDwarf = GetHeroRace(heroName);
-            Hero hero = CreateHero(heroName, isDwarf) ;
+            Hero hero = CreateHero(heroName, isDwarf);
+            Console.WriteLine($"Impressing! You have {hero.Stamina} Stamina, {hero.Health} Health, {hero.Strength} Strength and {hero.Block} Block");
+            HeroService service = new HeroService();
             while (hero.Incarnation >= 0)
             {
                 Monster monster = CreateMonster();
                 hero.Encounter(monster);
+                service.UpdateHero(hero);
             }
         }
         private string GetHeroName()
@@ -49,6 +53,8 @@ namespace RPGame.Entities.Games
                 hero = new Dwarf(heroName);
             else
                 hero = new Human(heroName);
+            HeroService service = new HeroService();
+            service.InsertHero(hero);
             return hero;
         }
 

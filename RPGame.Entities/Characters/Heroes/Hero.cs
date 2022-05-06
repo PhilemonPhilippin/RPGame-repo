@@ -4,6 +4,9 @@ namespace RPGame.Entities.Characters.Heroes
 {
     public class Hero : Character
     {
+        //TODO: DONNER UNE ID EN C#
+        public int Id { get; set; }
+
         private double _maxHealth;
 
         public double MaxHealth
@@ -17,8 +20,6 @@ namespace RPGame.Entities.Characters.Heroes
                     _maxHealth = value; 
             }
         }
-       
-
         private double _mana;
 
         public double Mana
@@ -96,6 +97,7 @@ namespace RPGame.Entities.Characters.Heroes
 
         public void Encounter(Monster monster)
         {
+            bool hasHeroWon;
             Console.WriteLine("=========================================");
             Console.WriteLine($"You encounter a wild {monster.Name}.");
             string choice = AskFightOrRun();
@@ -106,6 +108,7 @@ namespace RPGame.Entities.Characters.Heroes
             if (monster.Health == 0)
             {
                 Console.WriteLine("You have slain the monster.");
+                hasHeroWon = true;
                 this.Gold += monster.Gold;
                 this.Experience += monster.Fame;
                 this.LevelUp();
@@ -116,6 +119,7 @@ namespace RPGame.Entities.Characters.Heroes
             else if (this.Health == 0)
             {
                 Console.WriteLine("The monster destroyed you.");
+                hasHeroWon = false;
                 this.Incarnation--;
                 this.Health = this.MaxHealth;
                 this.Mana = this.MaxMana;
@@ -129,7 +133,8 @@ namespace RPGame.Entities.Characters.Heroes
             string heroChoice;
             do
             {
-                Console.WriteLine("Do you want to fight, or to try to run away? Note that if you fail to run away, you die instantly. Write 'fight' or 'run'...");
+                Console.WriteLine("Do you want to fight, or to try to run away? Note that if you fail to run away, you die instantly.");
+                Console.WriteLine("Write 'fight' or 'run'...");
                 heroChoice = Console.ReadLine().ToLower();
             } while (heroChoice != "fight" && heroChoice != "run");
             return heroChoice;
@@ -148,8 +153,8 @@ namespace RPGame.Entities.Characters.Heroes
         }
         private void Fight(Monster monster)
         {
-            this.DamageStack = this.Damage;
-            monster.DamageStack = monster.Damage;
+            this.DamageStack = this.CalculateStrikeDamage();
+            monster.DamageStack = monster.CalculateStrikeDamage();
             bool isHerosTurn = true;
             while (this.Health != 0 && monster.Health != 0)
             {
@@ -211,10 +216,7 @@ namespace RPGame.Entities.Characters.Heroes
             else
             {
                 this.Mana -= 50;
-                if (this.Health + 75 > this.MaxHealth)
-                    this.Health = this.MaxHealth;
-                else
-                    this.Health += 75;
+                this.Health = this.MaxHealth;
                 Console.WriteLine("You heal yourself.");
             }
         }
@@ -240,7 +242,7 @@ namespace RPGame.Entities.Characters.Heroes
                     Console.WriteLine("You perform an attack");
                     if (this.DamageStack - monster.BlockStack > 0)
                         monster.Health -= this.DamageStack - monster.BlockStack;
-                    this.DamageStack = this.Damage;
+                    this.DamageStack = this.CalculateStrikeDamage();
                     monster.BlockStack = 0;
                     break;
                 case "prepare":
@@ -272,7 +274,7 @@ namespace RPGame.Entities.Characters.Heroes
             if (this.Experience >= 100)
             {
                 this.Level++;
-                this.MaxHealth += 15;
+                this.MaxHealth += 2;
                 this.MaxMana += 15;
                 this.Incarnation++;
                 this.Experience -= 100;

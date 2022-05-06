@@ -5,10 +5,12 @@
         public Orc()
         {
             Name = "Orc";
-            Health = 180;
-            Damage = 30;
-            Block = 20;
-            Gold = 150;
+            Stamina = CalculateStamina() + 1;
+            Health = Stamina + CalculateModifier(Stamina);
+            Strength = CalculateStrength();
+            Damage = Strength;
+            Block = CalculateBlock();
+            Gold = CalculateGold() + 5;
             Fame = 45;
         }
     }

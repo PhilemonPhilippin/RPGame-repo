@@ -27,7 +27,7 @@ namespace RPGame.Entities.Characters.Monsters
                 Console.WriteLine("The monster performs an attack on you.");
                 if (this.DamageStack - hero.BlockStack > 0)
                     hero.Health -= this.DamageStack - hero.BlockStack;
-                this.DamageStack = this.Damage;
+                this.DamageStack = this.CalculateStrikeDamage();
                 hero.BlockStack = 0;
             }
             else
@@ -35,6 +35,12 @@ namespace RPGame.Entities.Characters.Monsters
                 Console.WriteLine("The monster prepare a great attack. Its next attack will do more damage.");
                 this.DamageStack *= 2.5;
             }
+        }
+        public int CalculateGold()
+        {
+            Random random = new Random();
+            int gold = random.Next(1, 7);
+            return gold;
         }
     }
 }

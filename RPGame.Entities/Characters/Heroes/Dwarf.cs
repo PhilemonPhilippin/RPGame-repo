@@ -5,18 +5,24 @@
         public Dwarf(string name)
         {
             Name = name;
-            Health = 100;
-            MaxHealth = Health;
+            Stamina = CalculateStamina() + 2;
+            MaxHealth = Stamina + CalculateModifier(Stamina);
+            Health = MaxHealth;
             Mana = 100;
             MaxMana = Mana;
             ManaPotion = 2;
-            Damage = 15;
-            Block = 20;
+            Strength = CalculateStrength();
+            Damage = Strength;
+            Block = CalculateBlock();
             Experience = 0;
             Level = 1;
             Incarnation = 3;
-            Gold = 100;
+            Gold = 10;
         }
+
+       
+
+        
 
     }
 }

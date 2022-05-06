@@ -3,9 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32328.378
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RPGame.ConsoleAPP", "RPGame.ConsoleAPP\RPGame.ConsoleAPP.csproj", "{A15FBDE8-27AE-4B46-BE9C-F79B76A2612D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RPGame.ConsoleAPP", "RPGame.ConsoleAPP\RPGame.ConsoleAPP.csproj", "{A15FBDE8-27AE-4B46-BE9C-F79B76A2612D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RPGame.Entities", "RPGame.Entities\RPGame.Entities.csproj", "{290AD0CC-62F7-4615-877A-47FADBBCB1FC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RPGame.Entities", "RPGame.Entities\RPGame.Entities.csproj", "{290AD0CC-62F7-4615-877A-47FADBBCB1FC}"
+EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "RPGame.DB", "RPGame.DB\RPGame.DB.sqlproj", "{D7D47FA2-3B7E-40F1-819C-B729FD62FBFD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RPGame.Services", "RPGame.Services\RPGame.Services.csproj", "{EAF48FEA-38C7-4DF4-85AD-50FF6817EDEC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +25,16 @@ Global
 		{290AD0CC-62F7-4615-877A-47FADBBCB1FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{290AD0CC-62F7-4615-877A-47FADBBCB1FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{290AD0CC-62F7-4615-877A-47FADBBCB1FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D7D47FA2-3B7E-40F1-819C-B729FD62FBFD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7D47FA2-3B7E-40F1-819C-B729FD62FBFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7D47FA2-3B7E-40F1-819C-B729FD62FBFD}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{D7D47FA2-3B7E-40F1-819C-B729FD62FBFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7D47FA2-3B7E-40F1-819C-B729FD62FBFD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D7D47FA2-3B7E-40F1-819C-B729FD62FBFD}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{EAF48FEA-38C7-4DF4-85AD-50FF6817EDEC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EAF48FEA-38C7-4DF4-85AD-50FF6817EDEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EAF48FEA-38C7-4DF4-85AD-50FF6817EDEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EAF48FEA-38C7-4DF4-85AD-50FF6817EDEC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

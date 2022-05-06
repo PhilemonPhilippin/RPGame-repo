@@ -5,10 +5,12 @@
         public Wolf()
         {
             Name = "Wolf";
-            Health = 80;
-            Damage = 15;
-            Block = 8;
-            Gold = 15;
+            Stamina = CalculateStamina();
+            Health = Stamina + CalculateModifier(Stamina);
+            Strength = CalculateStrength();
+            Damage = Strength;
+            Block = CalculateBlock();
+            Gold = CalculateGold();
             Fame = 15;
         }
     }
