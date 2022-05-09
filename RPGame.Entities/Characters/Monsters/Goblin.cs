@@ -5,9 +5,9 @@
         public Goblin()
         {
             Name = "Goblin";
-            Stamina = CalculateStamina();
+            CalculateStamina();
             Health = Stamina + CalculateModifier(Stamina);
-            Strength = CalculateStrength() + 1;
+            CalculateStrength(1);
             Damage = Strength;
             Block = CalculateBlock();
             Gold = CalculateGold() + 2;

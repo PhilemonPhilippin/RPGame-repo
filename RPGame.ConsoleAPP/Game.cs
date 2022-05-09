@@ -7,6 +7,10 @@ namespace RPGame.Entities.Games
     public class Game
     {
         //TODO: Zones, Weapons, Shop
+        //TODO: Sauvegarder si c'est un humain ou un nain dans la DB
+        //TODO: Quand je load un héro, il faut load humain ou nain
+        //TODO: Change DB: add "HeroId" in Battle, add it in RegisterBattle, add a FK pointing to Hero Id PK
+        //TODO: Also add the datetime of the fight in DB and in C# project
         public void Run()
         {
             Hero hero = GreetPlayer();

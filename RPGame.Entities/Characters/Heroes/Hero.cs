@@ -4,7 +4,6 @@ namespace RPGame.Entities.Characters.Heroes
 {
     public class Hero : Character
     {
-        //TODO: DONNER UNE ID EN C#
         public int Id { get; set; }
 
         private double _maxHealth;

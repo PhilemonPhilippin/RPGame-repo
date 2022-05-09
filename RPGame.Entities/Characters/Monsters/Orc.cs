@@ -5,9 +5,9 @@
         public Orc()
         {
             Name = "Orc";
-            Stamina = CalculateStamina() + 1;
+            CalculateStamina(1);
             Health = Stamina + CalculateModifier(Stamina);
-            Strength = CalculateStrength();
+            CalculateStrength();
             Damage = Strength;
             Block = CalculateBlock();
             Gold = CalculateGold() + 5;

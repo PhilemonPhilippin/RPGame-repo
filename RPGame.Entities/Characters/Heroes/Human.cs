@@ -5,13 +5,13 @@
         public Human(string name)
         {
             Name = name;
-            Stamina = CalculateStamina() + 1;
+            CalculateStamina(1);
             MaxHealth = Stamina + CalculateModifier(Stamina);
             Health = MaxHealth;
             Mana = 100;
             MaxMana = Mana;
             ManaPotion = 2;
-            Strength = CalculateStrength() + 1;
+            CalculateStrength(1);
             Damage = Strength;
             Block = CalculateBlock();
             Experience = 0;

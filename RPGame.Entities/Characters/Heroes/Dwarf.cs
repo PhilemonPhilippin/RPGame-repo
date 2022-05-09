@@ -5,13 +5,13 @@
         public Dwarf(string name)
         {
             Name = name;
-            Stamina = CalculateStamina() + 2;
+            CalculateStamina(2);
             MaxHealth = Stamina + CalculateModifier(Stamina);
             Health = MaxHealth;
             Mana = 100;
             MaxMana = Mana;
             ManaPotion = 2;
-            Strength = CalculateStrength();
+            CalculateStrength();
             Damage = Strength;
             Block = CalculateBlock();
             Experience = 0;

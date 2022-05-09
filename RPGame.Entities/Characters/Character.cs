@@ -112,7 +112,7 @@
             set { _gold = value; }
         }
 
-        public double CalculateStamina()
+        public void CalculateStamina()
         {
             int[] diceResults = new int[4];
             Random random = new Random();
@@ -131,10 +131,31 @@
                 }
             }
             double stamina = diceResults[1] + diceResults[2] + diceResults[3];
-            return stamina;
+            Stamina = stamina;
+        }
+        public void CalculateStamina(int bonus)
+        {
+            int[] diceResults = new int[4];
+            Random random = new Random();
+            for (int i = 0; i < 4; i++)
+            {
+                int diceResult = random.Next(1, 7);
+                diceResults[i] = diceResult;
+            }
+            for (int i = 1; i < diceResults.Length; i++)
+            {
+                if (diceResults[0] > diceResults[i])
+                {
+                    int temp = diceResults[0];
+                    diceResults[0] = diceResults[i];
+                    diceResults[i] = temp;
+                }
+            }
+            double stamina = diceResults[1] + diceResults[2] + diceResults[3];
+            Stamina = stamina + bonus;
         }
 
-        public double CalculateStrength()
+        public void CalculateStrength()
         {
             int[] diceResults = new int[4];
             Random random = new Random();
@@ -153,7 +174,28 @@
                 }
             }
             double strength = diceResults[1] + diceResults[2] + diceResults[3];
-            return strength;
+            Strength = strength;
+        }
+        public void CalculateStrength(int bonus)
+        {
+            int[] diceResults = new int[4];
+            Random random = new Random();
+            for (int i = 0; i < 4; i++)
+            {
+                int diceResult = random.Next(1, 7);
+                diceResults[i] = diceResult;
+            }
+            for (int i = 1; i < diceResults.Length; i++)
+            {
+                if (diceResults[0] > diceResults[i])
+                {
+                    int temp = diceResults[0];
+                    diceResults[0] = diceResults[i];
+                    diceResults[i] = temp;
+                }
+            }
+            double strength = diceResults[1] + diceResults[2] + diceResults[3];
+            Strength = strength + bonus;
         }
 
         public double CalculateModifier(double stat)
