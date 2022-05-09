@@ -5,9 +5,9 @@
         public Wolf()
         {
             Name = "Wolf";
-            CalculateStamina();
-            Health = Stamina + CalculateModifier(Stamina);
-            CalculateStrength();
+            SetStamina(CalculateStamina());
+            SetHealth(Stamina + CalculateModifier(Stamina));
+            SetStrength(CalculateStrength());
             Damage = Strength;
             Block = CalculateBlock();
             Gold = CalculateGold();

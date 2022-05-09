@@ -11,7 +11,7 @@
 	[Experience] FLOAT NOT NULL,
 	[Level] INT NOT NULL,
 	[Incarnation] INT NOT NULL,
-	[Gold] INT NOT NULL
+	[Gold] INT NOT NULL,
+    [Race] VARCHAR(50) NOT NULL,
 	CONSTRAINT PK_Hero PRIMARY KEY ([Id])
-
 )

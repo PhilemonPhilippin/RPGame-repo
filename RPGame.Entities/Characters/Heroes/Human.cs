@@ -4,14 +4,15 @@
     {
         public Human(string name)
         {
+            Race = "human";
             Name = name;
-            CalculateStamina(1);
-            MaxHealth = Stamina + CalculateModifier(Stamina);
-            Health = MaxHealth;
+            SetStamina(CalculateStamina(1));
+            SetMaxHealth(Stamina + CalculateModifier(Stamina));
+            SetHealth(MaxHealth);
             Mana = 100;
             MaxMana = Mana;
             ManaPotion = 2;
-            CalculateStrength(1);
+            SetStrength(CalculateStrength(1));
             Damage = Strength;
             Block = CalculateBlock();
             Experience = 0;

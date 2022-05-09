@@ -16,13 +16,17 @@ namespace RPGame.Entities.Characters
         public double Health
         {
             get { return _health; }
-            set
+            private set
             {
-                if (value < 0)
-                    _health = 0;
-                else
-                    _health = value;
+                _health = value;
             }
+        }
+        public void SetHealth(double value)
+        {
+            if (value < 0)
+                Health = 0;
+            else
+                Health = value;
         }
         private double _stamina;
 
@@ -31,13 +35,12 @@ namespace RPGame.Entities.Characters
             get { return _stamina; }
             private set { _stamina = value; }
         }
-        public double SetStamina(double value)
+        public void SetStamina(double value)
         {
             if (value < 0)
                 Stamina = 0;
             else
                 Stamina = value;
-            return Stamina;
         }
 
         private double _strength;
@@ -45,14 +48,19 @@ namespace RPGame.Entities.Characters
         public double Strength
         {
             get { return _strength; }
-            set 
+            private set 
             {
-                if (value < 0)
-                    _strength = 0;
-                else
-                    _strength = value; 
+                _strength = value;
             }
         }
+        public void SetStrength(double value)
+        {
+            if (value < 0)
+                Strength = 0;
+            else
+                Strength = value;
+        }
+
 
 
         private double _damage;
@@ -137,7 +145,7 @@ namespace RPGame.Entities.Characters
             double stamina = diceResults[1] + diceResults[2] + diceResults[3];
             return stamina;
         }
-        public double CalculateStamina(int bonus)
+        public double CalculateStamina(int racialBonus)
         {
             int[] diceResults = new int[4];
             for (int i = 0; i < 4; i++)
@@ -155,11 +163,11 @@ namespace RPGame.Entities.Characters
                     diceResults[i] = temp;
                 }
             }
-            double stamina = diceResults[1] + diceResults[2] + diceResults[3] + bonus;
+            double stamina = diceResults[1] + diceResults[2] + diceResults[3] + racialBonus;
             return stamina;
         }
 
-        public void CalculateStrength()
+        public double CalculateStrength()
         {
             int[] diceResults = new int[4];
             for (int i = 0; i < 4; i++)
@@ -178,9 +186,9 @@ namespace RPGame.Entities.Characters
                 }
             }
             double strength = diceResults[1] + diceResults[2] + diceResults[3];
-            Strength = strength;
+            return strength;
         }
-        public void CalculateStrength(int bonus)
+        public double CalculateStrength(int racialBonus)
         {
             int[] diceResults = new int[4];
             for (int i = 0; i < 4; i++)
@@ -198,8 +206,8 @@ namespace RPGame.Entities.Characters
                     diceResults[i] = temp;
                 }
             }
-            double strength = diceResults[1] + diceResults[2] + diceResults[3];
-            Strength = strength + bonus;
+            double strength = diceResults[1] + diceResults[2] + diceResults[3] + racialBonus;
+            return strength;
         }
 
         public double CalculateModifier(double stat)

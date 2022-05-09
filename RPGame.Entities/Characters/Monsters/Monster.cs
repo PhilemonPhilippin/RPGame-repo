@@ -12,9 +12,6 @@ namespace RPGame.Entities.Characters.Monsters
             get { return _fame; }
             set { _fame = value; }
         }
-
-       
-
         public void MonsterAction(Hero hero)
         {
             Dice dice = new Dice();
@@ -24,18 +21,18 @@ namespace RPGame.Entities.Characters.Monsters
             {
                 case 1:
                     Console.WriteLine("The monster prepare a great attack. Its next attack will do more damage.");
-                    this.DamageStack *= 2.5;
+                    DamageStack *= 2.5;
                     break;
                 case 2:
                 case 3:
                     Console.WriteLine("The monster will block the next attack.");
-                    this.BlockStack += this.Block;
+                    BlockStack += Block;
                     break;
                 default :
                     Console.WriteLine("The monster performs an attack on you.");
-                    if (this.DamageStack - hero.BlockStack > 0)
-                        hero.Health -= this.DamageStack - hero.BlockStack;
-                    this.DamageStack = this.CalculateStrikeDamage();
+                    if (DamageStack - hero.BlockStack > 0)
+                        hero.SetHealth(hero.Health - (DamageStack - hero.BlockStack));
+                    DamageStack = CalculateStrikeDamage();
                     hero.BlockStack = 0;
                     break;
             }

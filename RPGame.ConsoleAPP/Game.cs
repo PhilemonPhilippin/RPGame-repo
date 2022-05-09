@@ -7,14 +7,12 @@ namespace RPGame.Entities.Games
     public class Game
     {
         //TODO: Zones, Weapons, Shop
-        //TODO: Sauvegarder si c'est un humain ou un nain dans la DB
-        //TODO: Quand je load un héro, il faut load humain ou nain
-        //TODO: Change DB: add "HeroId" in Battle, add it in RegisterBattle, add a FK pointing to Hero Id PK
-        //TODO: Also add the datetime of the fight in DB and in C# project
         public void Run()
         {
             Hero hero = GreetPlayer();
-            Console.WriteLine($"Impressing! You have {hero.Stamina} Stamina, {hero.Health} Health, {hero.Strength} Strength and {hero.Block} Block");
+            Console.WriteLine($"Impressing! Your name is {hero.Name}, you have {hero.Stamina} Stamina, {hero.Health} Health, {hero.Strength} Strength and {hero.Block} Block.");
+            Console.WriteLine($"You also have {hero.Mana} Mana, {hero.ManaPotion} Mana potions, {hero.Incarnation} Incarnations and {hero.Gold} Gold.");
+            Console.WriteLine($"You are level {hero.Level} and have {hero.Experience} experience.");
             HeroService heroService = new HeroService();
             BattleService battleService = new BattleService();
             while (hero.Incarnation > 0)
@@ -69,8 +67,8 @@ namespace RPGame.Entities.Games
         private Hero CreateHero()
         {
             string heroName = GetHeroName();
-            bool isDwarf = GetHeroRace(heroName);
-            Hero hero = CreateHero(heroName, isDwarf);
+            string race = GetHeroRace(heroName);
+            Hero hero = CreateHero(heroName, race);
             return hero;
         }
         private string GetHeroName()
@@ -83,9 +81,8 @@ namespace RPGame.Entities.Games
             string name = Console.ReadLine();
             return name;
         }
-        private bool GetHeroRace(string name)
+        private string GetHeroRace(string name)
         {
-            bool isDwarf = false;
             Console.WriteLine($"Welcome {name}. Where are you from ?");
             Console.WriteLine("Did you dig your way from the harsh mountains to come here, or do you come from the quiet and peaceful plains?");
             string race;
@@ -94,14 +91,12 @@ namespace RPGame.Entities.Games
                 Console.WriteLine("Write 'dwarf' if you are a dwarf or 'human' if you are a human...");
                 race = Console.ReadLine().ToLower();
             } while (race != "dwarf" && race != "human");
-            if (race == "dwarf")
-                isDwarf = true;
-            return isDwarf;
+            return race;
         }
-        private Hero CreateHero(string heroName, bool isDwarf)
+        private Hero CreateHero(string heroName, string race)
         {
             Hero hero;
-            if (isDwarf)
+            if (race == "dwarf")
                 hero = new Dwarf(heroName);
             else
                 hero = new Human(heroName);

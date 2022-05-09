@@ -7,18 +7,24 @@ namespace RPGame.Entities.Characters.Heroes
     {
         public int Id { get; set; }
 
+        public string Race { get; set; }
+
         private double _maxHealth;
 
         public double MaxHealth
         {
             get { return _maxHealth; }
-            set 
+            private set 
             {
-                if (value < 0)
-                    _maxHealth = 0;
-                else
-                    _maxHealth = value; 
+                _maxHealth = value; 
             }
+        }
+        public void SetMaxHealth(double value)
+        {
+            if (value < 0)
+                MaxHealth = 0;
+            else
+                MaxHealth = value;
         }
         private double _mana;
 
@@ -110,22 +116,22 @@ namespace RPGame.Entities.Characters.Heroes
             {
                 Console.WriteLine("You have slain the monster.");
                 hasHeroWon = true;
-                this.Gold += monster.Gold;
-                this.Experience += monster.Fame;
-                this.LevelUp();
-                this.Health = this.MaxHealth;
-                this.Mana = this.MaxMana;
-                Console.WriteLine($"Your Health: {this.Health}, your mana: {this.Mana}, your gold: {this.Gold}, your XP: {this.Experience}, your lvl: {this.Level}");
+                Gold += monster.Gold;
+                Experience += monster.Fame;
+                LevelUp();
+                SetHealth(MaxHealth);
+                Mana = MaxMana;
+                Console.WriteLine($"Your Health: {Health}, your mana: {Mana}, your gold: {Gold}, your XP: {Experience}, your lvl: {Level}");
             }
             else if (this.Health == 0)
             {
                 Console.WriteLine("The monster destroyed you.");
                 hasHeroWon = false;
-                this.Incarnation--;
-                this.Health = this.MaxHealth;
-                this.Mana = this.MaxMana;
-                Console.WriteLine($"You have {this.Incarnation} incarnation left.");
-                Console.WriteLine($"Your Health: {this.Health}, your mana: {this.Mana}, your gold: {this.Gold}, your XP: {this.Experience}, your lvl: {this.Level}");
+                Incarnation--;
+                SetHealth(MaxHealth);
+                Mana = MaxMana;
+                Console.WriteLine($"You have {Incarnation} incarnation left.");
+                Console.WriteLine($"Your Health: {Health}, your mana: {Mana}, your gold: {Gold}, your XP: {Experience}, your lvl: {Level}");
             }
             Console.WriteLine("The encounter is over.");
             return hasHeroWon;
@@ -149,17 +155,17 @@ namespace RPGame.Entities.Characters.Heroes
             if (diceResult == 1)
             {
                 Console.WriteLine("You turn your back, try to run away but get executed.");
-                this.Health = 0;
+                SetHealth(0);
             }
             else
                 Console.WriteLine("You run away.");
         }
         private void Fight(Monster monster)
         {
-            this.DamageStack = this.CalculateStrikeDamage();
+            DamageStack = CalculateStrikeDamage();
             monster.DamageStack = monster.CalculateStrikeDamage();
             bool isHerosTurn = true;
-            while (this.Health != 0 && monster.Health != 0)
+            while (Health != 0 && monster.Health != 0)
             {
                 if (isHerosTurn)
                 {
@@ -171,7 +177,7 @@ namespace RPGame.Entities.Characters.Heroes
                 else
                 {
                     monster.MonsterAction(this);
-                    Console.WriteLine($"Hero health: {this.Health}");
+                    Console.WriteLine($"Hero health: {Health}");
                     isHerosTurn = true;
                 }
             }
@@ -189,6 +195,7 @@ namespace RPGame.Entities.Characters.Heroes
                 Console.WriteLine("Write 'block' to block the next monster's attack.");
                 Console.WriteLine("Write 'spell' to cast a spell. Or write 'potion' to drink a mana potion.");
                 Console.WriteLine("Write 'run' to try to run. If you fail to run away, you die instantly...");
+                Console.WriteLine("=========================================");
                 heroAction = Console.ReadLine().ToLower();
                 isHeroActionValid = heroAction == "attack" || heroAction == "prepare" || heroAction == "block" || heroAction == "spell" || heroAction == "potion" || heroAction == "run";
             } while (!isHeroActionValid);
@@ -214,26 +221,26 @@ namespace RPGame.Entities.Characters.Heroes
         }
         private void Heal()
         {
-            if (this.Mana < 50)
+            if (Mana < 50)
                 Console.WriteLine("You don't have enough mana to heal yourself. You need 50 mana.");
             else
             {
-                this.Mana -= 50;
-                this.Health = this.MaxHealth;
+                Mana -= 50;
+                SetHealth(MaxHealth);
                 Console.WriteLine("You heal yourself.");
             }
         }
         private void DrinkManaPotion()
         {
-            if (this.ManaPotion <= 0)
+            if (ManaPotion <= 0)
                 Console.WriteLine("You don't have any mana potion left.");
             else
             {
-                if (this.Mana + 50 > this.MaxMana)
-                    this.Mana = this.MaxMana;
+                if (Mana + 50 > MaxMana)
+                    Mana = MaxMana;
                 else
-                    this.Mana += 50;
-                this.ManaPotion--;
+                    Mana += 50;
+                ManaPotion--;
                 Console.WriteLine("You drink a mana potion");
             }
         }
@@ -243,18 +250,18 @@ namespace RPGame.Entities.Characters.Heroes
             {
                 case "attack":
                     Console.WriteLine("You perform an attack");
-                    if (this.DamageStack - monster.BlockStack > 0)
-                        monster.Health -= this.DamageStack - monster.BlockStack;
-                    this.DamageStack = this.CalculateStrikeDamage();
+                    if (DamageStack - monster.BlockStack > 0)
+                        monster.SetHealth(monster.Health - (DamageStack - monster.BlockStack));
+                    DamageStack = CalculateStrikeDamage();
                     monster.BlockStack = 0;
                     break;
                 case "prepare":
                     Console.WriteLine("You prepare a great attack");
-                    this.DamageStack *= 2.5;
+                    DamageStack *= 2.5;
                     break;
                 case "block":
                     Console.WriteLine("You will block the next attack.");
-                    this.BlockStack += this.Block;
+                    BlockStack += this.Block;
                     break;
                 case "spell":
                     Console.WriteLine("You cast a spell.");
@@ -274,13 +281,13 @@ namespace RPGame.Entities.Characters.Heroes
         }
         private void LevelUp()
         {
-            if (this.Experience >= 100)
+            if (Experience >= 100)
             {
-                this.Level++;
-                this.MaxHealth += 2;
-                this.MaxMana += 15;
-                this.Incarnation++;
-                this.Experience -= 100;
+                Level++;
+                MaxHealth += 2;
+                MaxMana += 15;
+                Incarnation++;
+                Experience -= 100;
                 Console.WriteLine("Congratulations, you level up!");
             }
         }

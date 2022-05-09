@@ -6,7 +6,7 @@ namespace RPGame.Services
 {
     public class BattleService
     {
-        string connectionString = @"Data Source=ICT-202-08\SQL2019DEV;Initial Catalog=RPGame;Integrated Security=True;Connect Timeout=60;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+        string connectionString = @"Data Source=DESKTOP-OGDC409;Initial Catalog=RPGame;Integrated Security=True;Connect Timeout=60;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
 
         public void RegisterBattle(Hero hero, Monster monster, bool hasHeroWon)
         {
@@ -15,10 +15,12 @@ namespace RPGame.Services
                 connection.ConnectionString = connectionString;
                 using (SqlCommand command = connection.CreateCommand())
                 {
-                    command.CommandText = "INSERT INTO Battle (HeroName, MonsterName, HasHeroWon) VALUES (@HeroName, @MonsterName, @HasHeroWon);";
+                    command.CommandText = "INSERT INTO Battle (HeroName, MonsterName, HasHeroWon, HeroId, BattleTime) VALUES (@HeroName, @MonsterName, @HasHeroWon, @HeroId, @BattleTime);";
                     command.Parameters.AddWithValue("HeroName", hero.Name);
                     command.Parameters.AddWithValue("MonsterName", monster.Name);
                     command.Parameters.AddWithValue("HasHeroWon", hasHeroWon);
+                    command.Parameters.AddWithValue("HeroId", hero.Id);
+                    command.Parameters.AddWithValue("BattleTime", DateTime.Now);
                     connection.Open();
                     command.ExecuteNonQuery();
                 }

@@ -5,7 +5,7 @@ namespace RPGame.Services
 {
     public class HeroService
     {
-        string connectionString = @"Data Source=ICT-202-08\SQL2019DEV;Initial Catalog=RPGame;Integrated Security=True;Connect Timeout=60;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+        string connectionString = @"Data Source=DESKTOP-OGDC409;Initial Catalog=RPGame;Integrated Security=True;Connect Timeout=60;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
         public void InsertHero(Hero hero)
         {
             using (SqlConnection connection = new SqlConnection())
@@ -13,7 +13,7 @@ namespace RPGame.Services
                 connection.ConnectionString = connectionString;
                 using (SqlCommand command = connection.CreateCommand())
                 {
-                    command.CommandText = "INSERT INTO Hero (Name, Stamina, MaxHealth, MaxMana, ManaPotion, Strength, Block, Experience, Level, Incarnation, Gold) output inserted.Id VALUES (@Name, @Stamina, @MaxHealth, @MaxMana, @ManaPotion, @Strength, @Block, @Experience, @Level, @Incarnation, @Gold);";
+                    command.CommandText = "INSERT INTO Hero (Name, Stamina, MaxHealth, MaxMana, ManaPotion, Strength, Block, Experience, Level, Incarnation, Gold, Race) output inserted.Id VALUES (@Name, @Stamina, @MaxHealth, @MaxMana, @ManaPotion, @Strength, @Block, @Experience, @Level, @Incarnation, @Gold, @Race);";
                     command.Parameters.AddWithValue("Name", hero.Name);
                     command.Parameters.AddWithValue("Stamina", hero.Stamina);
                     command.Parameters.AddWithValue("MaxHealth", hero.MaxHealth);
@@ -25,6 +25,7 @@ namespace RPGame.Services
                     command.Parameters.AddWithValue("Level", hero.Level);
                     command.Parameters.AddWithValue("Incarnation", hero.Incarnation);
                     command.Parameters.AddWithValue("Gold", hero.Gold);
+                    command.Parameters.AddWithValue("Race", hero.Race);
                     connection.Open();
                     hero.Id = (int) command.ExecuteScalar();
                 }
@@ -92,19 +93,20 @@ namespace RPGame.Services
 
                             hero.Id = (int)reader["Id"];
                             hero.Name = (string)reader["Name"];
-                            hero.Stamina = (double)reader["Stamina"];
-                            hero.MaxHealth = (double)reader["MaxHealth"];
-                            hero.Health = hero.MaxHealth;
+                            hero.SetStamina((double)reader["Stamina"]);
+                            hero.SetMaxHealth((double)reader["MaxHealth"]);
+                            hero.SetHealth(hero.MaxHealth);
                             hero.MaxMana = (double)reader["MaxMana"];
                             hero.Mana = hero.MaxMana;
                             hero.ManaPotion = (int)reader["ManaPotion"];
-                            hero.Strength = (double)reader["Strength"];
+                            hero.SetStrength((double)reader["Strength"]);
                             hero.Damage = hero.Strength;
                             hero.Block = (double)reader["Block"];
                             hero.Experience = (double)reader["Experience"];
                             hero.Level = (int)reader["Level"];
                             hero.Incarnation = (int)reader["Incarnation"];
                             hero.Gold = (int)reader["Gold"];
+                            hero.Race = (string)reader["Race"];
                         }
                     }
                 }

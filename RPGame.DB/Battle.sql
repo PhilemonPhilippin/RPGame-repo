@@ -4,5 +4,8 @@
 	[HeroName] VARCHAR(50) NOT NULL,
 	[MonsterName] VARCHAR(50) NOT NULL,
 	[HasHeroWon] BIT NOT NULL,
-	CONSTRAINT PK_Battle PRIMARY KEY ([Id])
+	[HeroId] INT NOT NULL, 
+    [BattleTime] DATETIME NOT NULL, 
+    CONSTRAINT PK_Battle PRIMARY KEY ([Id]),
+	CONSTRAINT FK_Battle_Hero FOREIGN KEY ([HeroId]) REFERENCES Hero([Id])
 )

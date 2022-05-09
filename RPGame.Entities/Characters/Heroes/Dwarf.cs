@@ -4,14 +4,15 @@
     {
         public Dwarf(string name)
         {
+            Race = "dwarf";
             Name = name;
-            CalculateStamina(2);
-            MaxHealth = Stamina + CalculateModifier(Stamina);
-            Health = MaxHealth;
+            SetStamina(CalculateStamina(2));
+            SetMaxHealth(Stamina + CalculateModifier(Stamina));
+            SetHealth(MaxHealth);
             Mana = 100;
             MaxMana = Mana;
             ManaPotion = 2;
-            CalculateStrength();
+            SetStrength(CalculateStrength());
             Damage = Strength;
             Block = CalculateBlock();
             Experience = 0;
@@ -19,10 +20,5 @@
             Incarnation = 3;
             Gold = 10;
         }
-
-       
-
-        
-
     }
 }
