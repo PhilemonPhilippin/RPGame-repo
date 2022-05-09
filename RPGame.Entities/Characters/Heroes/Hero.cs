@@ -1,4 +1,5 @@
 ﻿using RPGame.Entities.Characters.Monsters;
+using RPGame.Entities.Games;
 
 namespace RPGame.Entities.Characters.Heroes
 {
@@ -142,9 +143,10 @@ namespace RPGame.Entities.Characters.Heroes
         }
         private void TryToRunAway(int diceFaces)
         {
-            Random random = new Random();
-            int dice = random.Next(1, diceFaces + 1);
-            if (dice == 1)
+            Dice dice = new Dice();
+            dice.SetMinMax(diceFaces);
+            int diceResult = dice.Roll();
+            if (diceResult == 1)
             {
                 Console.WriteLine("You turn your back, try to run away but get executed.");
                 this.Health = 0;

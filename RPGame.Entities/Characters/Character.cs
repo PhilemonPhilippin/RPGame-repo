@@ -1,4 +1,6 @@
-﻿namespace RPGame.Entities.Characters
+﻿using RPGame.Entities.Games;
+
+namespace RPGame.Entities.Characters
 {
     public class Character
     {
@@ -27,13 +29,15 @@
         public double Stamina
         {
             get { return _stamina; }
-            set 
-            {
-                if (value < 0)
-                    _stamina = 0;
-                else
-                    _stamina = value; 
-            }
+            private set { _stamina = value; }
+        }
+        public double SetStamina(double value)
+        {
+            if (value < 0)
+                Stamina = 0;
+            else
+                Stamina = value;
+            return Stamina;
         }
 
         private double _strength;
@@ -112,14 +116,14 @@
             set { _gold = value; }
         }
 
-        public void CalculateStamina()
+        public double CalculateStamina()
         {
             int[] diceResults = new int[4];
-            Random random = new Random();
             for (int i = 0; i < 4; i++)
             {
-                int diceResult = random.Next(1, 7);
-                diceResults[i] = diceResult;
+                Dice diceSix = new Dice();
+                diceSix.SetMinMax(6);
+                diceResults[i] = diceSix.Roll();
             }
             for (int i = 1; i < diceResults.Length; i++)
             {
@@ -131,16 +135,16 @@
                 }
             }
             double stamina = diceResults[1] + diceResults[2] + diceResults[3];
-            Stamina = stamina;
+            return stamina;
         }
-        public void CalculateStamina(int bonus)
+        public double CalculateStamina(int bonus)
         {
             int[] diceResults = new int[4];
-            Random random = new Random();
             for (int i = 0; i < 4; i++)
             {
-                int diceResult = random.Next(1, 7);
-                diceResults[i] = diceResult;
+                Dice diceSix = new Dice();
+                diceSix.SetMinMax(6);
+                diceResults[i] = diceSix.Roll();
             }
             for (int i = 1; i < diceResults.Length; i++)
             {
@@ -151,18 +155,18 @@
                     diceResults[i] = temp;
                 }
             }
-            double stamina = diceResults[1] + diceResults[2] + diceResults[3];
-            Stamina = stamina + bonus;
+            double stamina = diceResults[1] + diceResults[2] + diceResults[3] + bonus;
+            return stamina;
         }
 
         public void CalculateStrength()
         {
             int[] diceResults = new int[4];
-            Random random = new Random();
             for (int i = 0; i < 4; i++)
             {
-                int diceResult = random.Next(1, 7);
-                diceResults[i] = diceResult;
+                Dice diceSix = new Dice();
+                diceSix.SetMinMax(6);
+                diceResults[i] = diceSix.Roll();
             }
             for (int i = 1; i < diceResults.Length; i++)
             {
@@ -179,11 +183,11 @@
         public void CalculateStrength(int bonus)
         {
             int[] diceResults = new int[4];
-            Random random = new Random();
             for (int i = 0; i < 4; i++)
             {
-                int diceResult = random.Next(1, 7);
-                diceResults[i] = diceResult;
+                Dice diceSix = new Dice();
+                diceSix.SetMinMax(6);
+                diceResults[i] = diceSix.Roll();
             }
             for (int i = 1; i < diceResults.Length; i++)
             {
@@ -213,15 +217,17 @@
         }
         public double CalculateStrikeDamage()
         {
-            Random random = new Random();
-            int dice = random.Next(1, 5);
-            double strikeDamage = dice + CalculateModifier(this.Strength);
+            Dice diceFour = new Dice();
+            diceFour.SetMinMax(4);
+            int diceResult = diceFour.Roll();
+            double strikeDamage = diceResult + CalculateModifier(this.Strength);
             return strikeDamage;
         }
         public double CalculateBlock()
         {
-            Random random = new Random();
-            double block = random.Next(1, 6);
+            Dice diceFive = new Dice();
+            diceFive.SetMinMax(5);
+            double block = diceFive.Roll();
             return block;
         }
     }

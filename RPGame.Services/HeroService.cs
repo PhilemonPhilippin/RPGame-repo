@@ -51,8 +51,7 @@ namespace RPGame.Services
                     command.Parameters.AddWithValue("Gold", hero.Gold);
                     command.Parameters.AddWithValue("Id", hero.Id);
                     connection.Open();
-                    int linesModified = command.ExecuteNonQuery();
-                    Console.WriteLine($"Lines modified : {linesModified}");
+                    command.ExecuteNonQuery();
                 }
             }
         }

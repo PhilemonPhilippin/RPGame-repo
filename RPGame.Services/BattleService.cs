@@ -20,8 +20,7 @@ namespace RPGame.Services
                     command.Parameters.AddWithValue("MonsterName", monster.Name);
                     command.Parameters.AddWithValue("HasHeroWon", hasHeroWon);
                     connection.Open();
-                    int linesModified = command.ExecuteNonQuery();
-                    Console.WriteLine($"Lines modified : {linesModified}");
+                    command.ExecuteNonQuery();
                 }
             }
         }
