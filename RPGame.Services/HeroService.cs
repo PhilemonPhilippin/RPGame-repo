@@ -56,5 +56,62 @@ namespace RPGame.Services
                 }
             }
         }
+        public void DisplayHeroes()
+        {
+            using (SqlConnection connection = new SqlConnection())
+            {
+                connection.ConnectionString = connectionString;
+                using (SqlCommand command = connection.CreateCommand())
+                {
+                    command.CommandText = "SELECT Id, Name, Level FROM Hero WHERE Incarnation > 0;";
+                    connection.Open();
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            Console.WriteLine($"Hero ID number : {reader["Id"]}, Hero name : {reader["Name"]}, Hero level : {reader["Level"]}");
+                        }
+                    }
+                }
+            }
+        }
+        public Hero GetHero(int id)
+        {
+            using (SqlConnection connection = new SqlConnection())
+            {
+                Hero hero = new Hero();
+                connection.ConnectionString = connectionString;
+                using (SqlCommand command = connection.CreateCommand())
+                {
+                    command.CommandText = "SELECT * FROM Hero WHERE Id = @Id;";
+                    command.Parameters.AddWithValue("Id", id);
+                    connection.Open();
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+
+                            hero.Id = (int)reader["Id"];
+                            hero.Name = (string)reader["Name"];
+                            hero.Stamina = (double)reader["Stamina"];
+                            hero.MaxHealth = (double)reader["MaxHealth"];
+                            hero.Health = hero.MaxHealth;
+                            hero.MaxMana = (double)reader["MaxMana"];
+                            hero.Mana = hero.MaxMana;
+                            hero.ManaPotion = (int)reader["ManaPotion"];
+                            hero.Strength = (double)reader["Strength"];
+                            hero.Damage = hero.Strength;
+                            hero.Block = (double)reader["Block"];
+                            hero.Experience = (double)reader["Experience"];
+                            hero.Level = (int)reader["Level"];
+                            hero.Incarnation = (int)reader["Incarnation"];
+                            hero.Gold = (int)reader["Gold"];
+                        }
+                    }
+                }
+                return hero;
+            }
+
+        }
     }
 }

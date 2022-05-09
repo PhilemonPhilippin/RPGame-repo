@@ -9,17 +9,65 @@ namespace RPGame.Entities.Games
         //TODO: Zones, Weapons, Shop
         public void Run()
         {
+            Hero hero = GreetPlayer();
+            Console.WriteLine($"Impressing! You have {hero.Stamina} Stamina, {hero.Health} Health, {hero.Strength} Strength and {hero.Block} Block");
+            HeroService heroService = new HeroService();
+            BattleService battleService = new BattleService();
+            while (hero.Incarnation > 0)
+            {
+                Monster monster = CreateMonster();
+                bool hasHeroWon = hero.Encounter(monster);
+                heroService.UpdateHero(hero);
+                battleService.RegisterBattle(hero, monster, hasHeroWon);
+            }
+        }
+
+
+        private Hero GreetPlayer()
+        {
+            Console.WriteLine("Hello. Do you want to create a new hero or to load a saved one ?");
+            string answer = "";
+            Hero hero;
+            do
+            {
+                Console.WriteLine("Write 'new' or 'load'...");
+                answer = Console.ReadLine();
+            } while (answer != "new" && answer != "load");
+            if (answer == "new")
+                hero = CreateHero();
+            else
+                hero = LoadHero();
+            return hero;
+        }
+        private Hero LoadHero()
+        {
+            Hero hero;
+            bool isHeroFound = false;
+            do
+            {
+                Console.WriteLine("You want to load a saved hero. Here is the list of all saved heroes with their ID.");
+                HeroService service = new HeroService();
+                service.DisplayHeroes();
+                int id;
+                bool isParsed = false;
+                do
+                {
+                    Console.WriteLine("What is the ID of your hero ?...");
+                    isParsed = int.TryParse(Console.ReadLine(), out id);
+                } while (!isParsed);
+                hero = service.GetHero(id);
+                if (hero.Name is not null)
+                    isHeroFound = true;
+            } while (!isHeroFound);
+            return hero;
+        }
+
+        private Hero CreateHero()
+        {
             string heroName = GetHeroName();
             bool isDwarf = GetHeroRace(heroName);
             Hero hero = CreateHero(heroName, isDwarf);
-            Console.WriteLine($"Impressing! You have {hero.Stamina} Stamina, {hero.Health} Health, {hero.Strength} Strength and {hero.Block} Block");
-            HeroService service = new HeroService();
-            while (hero.Incarnation >= 0)
-            {
-                Monster monster = CreateMonster();
-                hero.Encounter(monster);
-                service.UpdateHero(hero);
-            }
+            return hero;
         }
         private string GetHeroName()
         {

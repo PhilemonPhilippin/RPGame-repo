@@ -95,9 +95,8 @@ namespace RPGame.Entities.Characters.Heroes
             }
         }
 
-        public void Encounter(Monster monster)
+        public bool Encounter(Monster monster)
         {
-            bool hasHeroWon;
             Console.WriteLine("=========================================");
             Console.WriteLine($"You encounter a wild {monster.Name}.");
             string choice = AskFightOrRun();
@@ -105,6 +104,8 @@ namespace RPGame.Entities.Characters.Heroes
                 TryToRunAway(5);
             else
                 Fight(monster);
+
+            bool hasHeroWon = false;
             if (monster.Health == 0)
             {
                 Console.WriteLine("You have slain the monster.");
@@ -127,6 +128,7 @@ namespace RPGame.Entities.Characters.Heroes
                 Console.WriteLine($"Your Health: {this.Health}, your mana: {this.Mana}, your gold: {this.Gold}, your XP: {this.Experience}, your lvl: {this.Level}");
             }
             Console.WriteLine("The encounter is over.");
+            return hasHeroWon;
         }
         private string AskFightOrRun()
         {
