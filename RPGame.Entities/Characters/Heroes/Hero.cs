@@ -100,7 +100,12 @@ namespace RPGame.Entities.Characters.Heroes
                     _incarnation = value; 
             }
         }
-
+        public void DisplayStats()
+        {
+            Console.WriteLine($"Your name is {Name}, you have {Stamina} Stamina, {Health} Health, {Strength} Strength and {Block} Block.");
+            Console.WriteLine($"You also have {Mana} Mana, {ManaPotion} Mana potions, {Incarnation} Incarnations and {Gold} Gold.");
+            Console.WriteLine($"You are level {Level} and have {Experience} experience.");
+        }
         public bool Encounter(Monster monster)
         {
             Console.WriteLine("=========================================");
@@ -121,7 +126,7 @@ namespace RPGame.Entities.Characters.Heroes
                 LevelUp();
                 SetHealth(MaxHealth);
                 Mana = MaxMana;
-                Console.WriteLine($"Your Health: {Health}, your mana: {Mana}, your gold: {Gold}, your XP: {Experience}, your lvl: {Level}");
+                DisplayStats();
             }
             else if (this.Health == 0)
             {
@@ -130,8 +135,7 @@ namespace RPGame.Entities.Characters.Heroes
                 Incarnation--;
                 SetHealth(MaxHealth);
                 Mana = MaxMana;
-                Console.WriteLine($"You have {Incarnation} incarnation left.");
-                Console.WriteLine($"Your Health: {Health}, your mana: {Mana}, your gold: {Gold}, your XP: {Experience}, your lvl: {Level}");
+                DisplayStats();
             }
             Console.WriteLine("The encounter is over.");
             return hasHeroWon;
@@ -150,7 +154,7 @@ namespace RPGame.Entities.Characters.Heroes
         private void TryToRunAway(int diceFaces)
         {
             Dice dice = new Dice();
-            dice.SetMinMax(diceFaces);
+            dice.SetDiceFaces(diceFaces);
             int diceResult = dice.Roll();
             if (diceResult == 1)
             {

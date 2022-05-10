@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace RPGame.Entities.Games
+﻿namespace RPGame.Entities.Games
 {
     public class Dice
     {
@@ -16,7 +10,7 @@ namespace RPGame.Entities.Games
         {
             get; private set;
         }
-        public void SetMinMax(int diceFaces)
+        public void SetDiceFaces(int diceFaces)
         {
             Minimum = 1;
             Maximum = diceFaces + 1;

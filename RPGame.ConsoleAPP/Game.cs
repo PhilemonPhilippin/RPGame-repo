@@ -10,9 +10,7 @@ namespace RPGame.Entities.Games
         public void Run()
         {
             Hero hero = GreetPlayer();
-            Console.WriteLine($"Impressing! Your name is {hero.Name}, you have {hero.Stamina} Stamina, {hero.Health} Health, {hero.Strength} Strength and {hero.Block} Block.");
-            Console.WriteLine($"You also have {hero.Mana} Mana, {hero.ManaPotion} Mana potions, {hero.Incarnation} Incarnations and {hero.Gold} Gold.");
-            Console.WriteLine($"You are level {hero.Level} and have {hero.Experience} experience.");
+            hero.DisplayStats();
             HeroService heroService = new HeroService();
             BattleService battleService = new BattleService();
             while (hero.Incarnation > 0)
@@ -29,12 +27,12 @@ namespace RPGame.Entities.Games
         {
             Console.WriteLine("Hello. Do you want to create a new hero or to load a saved one ?");
             string answer = "";
-            Hero hero;
             do
             {
                 Console.WriteLine("Write 'new' or 'load'...");
                 answer = Console.ReadLine();
             } while (answer != "new" && answer != "load");
+            Hero hero;
             if (answer == "new")
                 hero = CreateHero();
             else
@@ -108,11 +106,12 @@ namespace RPGame.Entities.Games
         private Monster CreateMonster()
         {
             Monster monster;
-            Random random = new Random();
-            int dice = random.Next(1, 7);
-            if (dice == 6)
+            Dice dice = new Dice();
+            dice.SetDiceFaces(6);
+            int diceResult = dice.Roll();
+            if (diceResult == 6)
                 monster = new Orc();
-            else if (dice >= 4)
+            else if (diceResult >= 4)
                 monster = new Goblin();
             else
                 monster = new Wolf();

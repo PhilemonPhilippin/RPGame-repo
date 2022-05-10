@@ -130,7 +130,7 @@ namespace RPGame.Entities.Characters
             for (int i = 0; i < 4; i++)
             {
                 Dice diceSix = new Dice();
-                diceSix.SetMinMax(6);
+                diceSix.SetDiceFaces(6);
                 diceResults[i] = diceSix.Roll();
             }
             for (int i = 1; i < diceResults.Length; i++)
@@ -151,7 +151,7 @@ namespace RPGame.Entities.Characters
             for (int i = 0; i < 4; i++)
             {
                 Dice diceSix = new Dice();
-                diceSix.SetMinMax(6);
+                diceSix.SetDiceFaces(6);
                 diceResults[i] = diceSix.Roll();
             }
             for (int i = 1; i < diceResults.Length; i++)
@@ -173,7 +173,7 @@ namespace RPGame.Entities.Characters
             for (int i = 0; i < 4; i++)
             {
                 Dice diceSix = new Dice();
-                diceSix.SetMinMax(6);
+                diceSix.SetDiceFaces(6);
                 diceResults[i] = diceSix.Roll();
             }
             for (int i = 1; i < diceResults.Length; i++)
@@ -194,7 +194,7 @@ namespace RPGame.Entities.Characters
             for (int i = 0; i < 4; i++)
             {
                 Dice diceSix = new Dice();
-                diceSix.SetMinMax(6);
+                diceSix.SetDiceFaces(6);
                 diceResults[i] = diceSix.Roll();
             }
             for (int i = 1; i < diceResults.Length; i++)
@@ -226,7 +226,7 @@ namespace RPGame.Entities.Characters
         public double CalculateStrikeDamage()
         {
             Dice diceFour = new Dice();
-            diceFour.SetMinMax(4);
+            diceFour.SetDiceFaces(4);
             int diceResult = diceFour.Roll();
             double strikeDamage = diceResult + CalculateModifier(this.Strength);
             return strikeDamage;
@@ -234,7 +234,7 @@ namespace RPGame.Entities.Characters
         public double CalculateBlock()
         {
             Dice diceFive = new Dice();
-            diceFive.SetMinMax(5);
+            diceFive.SetDiceFaces(5);
             double block = diceFive.Roll();
             return block;
         }

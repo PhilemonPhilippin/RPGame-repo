@@ -15,7 +15,7 @@ namespace RPGame.Entities.Characters.Monsters
         public void MonsterAction(Hero hero)
         {
             Dice dice = new Dice();
-            dice.SetMinMax(5);
+            dice.SetDiceFaces(5);
             int diceResult = dice.Roll();
             switch (diceResult)
             {
@@ -40,7 +40,7 @@ namespace RPGame.Entities.Characters.Monsters
         public int CalculateGold()
         {
             Dice dice = new Dice();
-            dice.SetMinMax(6);
+            dice.SetDiceFaces(6);
             int gold = dice.Roll();
             return gold;
         }
