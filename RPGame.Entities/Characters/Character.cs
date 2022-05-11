@@ -151,27 +151,6 @@ namespace RPGame.Entities.Characters
             double stamina = diceResults[1] + diceResults[2] + diceResults[3];
             return stamina;
         }
-        public double CalculateStamina(int racialBonus)
-        {
-            int[] diceResults = new int[4];
-            for (int i = 0; i < 4; i++)
-            {
-                Dice diceSix = new Dice();
-                diceSix.SetDiceFaces(6);
-                diceResults[i] = diceSix.Roll();
-            }
-            for (int i = 1; i < diceResults.Length; i++)
-            {
-                if (diceResults[0] > diceResults[i])
-                {
-                    int temp = diceResults[0];
-                    diceResults[0] = diceResults[i];
-                    diceResults[i] = temp;
-                }
-            }
-            double stamina = diceResults[1] + diceResults[2] + diceResults[3] + racialBonus;
-            return stamina;
-        }
 
         public double CalculateStrength()
         {
@@ -194,27 +173,6 @@ namespace RPGame.Entities.Characters
             double strength = diceResults[1] + diceResults[2] + diceResults[3];
             return strength;
         }
-        public double CalculateStrength(int racialBonus)
-        {
-            int[] diceResults = new int[4];
-            for (int i = 0; i < 4; i++)
-            {
-                Dice diceSix = new Dice();
-                diceSix.SetDiceFaces(6);
-                diceResults[i] = diceSix.Roll();
-            }
-            for (int i = 1; i < diceResults.Length; i++)
-            {
-                if (diceResults[0] > diceResults[i])
-                {
-                    int temp = diceResults[0];
-                    diceResults[0] = diceResults[i];
-                    diceResults[i] = temp;
-                }
-            }
-            double strength = diceResults[1] + diceResults[2] + diceResults[3] + racialBonus;
-            return strength;
-        }
 
         public double CalculateModifier(double stat)
         {
@@ -234,7 +192,7 @@ namespace RPGame.Entities.Characters
             Dice diceFour = new Dice();
             diceFour.SetDiceFaces(4);
             int diceResult = diceFour.Roll();
-            double strikeDamage = diceResult + CalculateModifier(this.Strength);
+            double strikeDamage = diceResult + CalculateModifier(Strength);
             return strikeDamage;
         }
         public double CalculateBlock()

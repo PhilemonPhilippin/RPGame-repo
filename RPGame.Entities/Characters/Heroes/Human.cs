@@ -2,17 +2,25 @@
 {
     public class Human : Hero
     {
+        public override double Strength
+        {
+            get { return base.Strength + 1; }
+        }
+        public override double Stamina
+        {
+            get { return base.Stamina + 1; }
+        }
         public Human(string name)
         {
             Race = "human";
             Name = name;
-            SetStamina(CalculateStamina(1));
+            SetStamina(CalculateStamina());
             SetMaxHealth(Stamina + CalculateModifier(Stamina));
             SetHealth(MaxHealth);
             Mana = 100;
             MaxMana = Mana;
             ManaPotion = 2;
-            SetStrength(CalculateStrength(1));
+            SetStrength(CalculateStrength());
             Damage = Strength;
             Block = CalculateBlock();
             Experience = 0;

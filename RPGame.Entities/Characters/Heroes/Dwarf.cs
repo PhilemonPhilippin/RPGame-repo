@@ -2,12 +2,15 @@
 {
     public class Dwarf : Hero
     {
-       
+        public override double Stamina
+        {
+            get { return base.Stamina + 2; }
+        }
         public Dwarf(string name)
         {
             Race = "dwarf";
             Name = name;
-            SetStamina(CalculateStamina(2));
+            SetStamina(CalculateStamina());
             SetMaxHealth(Stamina + CalculateModifier(Stamina));
             SetHealth(MaxHealth);
             Mana = 100;

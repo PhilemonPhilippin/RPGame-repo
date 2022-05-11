@@ -2,12 +2,20 @@
 {
     public class DragonWhelp : Monster
     {
+        public override double Stamina
+        {
+            get { return base.Stamina + 1; }
+        }
+        public override double Strength
+        {
+            get { return base.Strength + 1; }
+        }
         public DragonWhelp()
         {
             Name = "DragonWhelp";
-            SetStamina(CalculateStamina(1));
+            SetStamina(CalculateStamina());
             SetHealth(Stamina + CalculateModifier(Stamina));
-            SetStrength(CalculateStrength(1));
+            SetStrength(CalculateStrength());
             Damage = Strength;
             Block = CalculateBlock();
             Gold = CalculateGold();
