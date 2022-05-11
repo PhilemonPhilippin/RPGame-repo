@@ -9,17 +9,20 @@ namespace RPGame.Entities.Games
         //TODO: Zones, Weapons, Shop
         public void Run()
         {
-            Hero hero = GreetPlayer();
-            hero.DisplayStats();
-            HeroService heroService = new HeroService();
-            BattleService battleService = new BattleService();
-            while (hero.Incarnation > 0)
-            {
-                Monster monster = CreateMonster();
-                bool hasHeroWon = hero.Encounter(monster);
-                heroService.UpdateHero(hero);
-                battleService.RegisterBattle(hero, monster, hasHeroWon);
-            }
+            //Hero hero = GreetPlayer();
+            //hero.DisplayStats();
+            char[,] area = CreateArea();
+            PopulateArea(area);
+            DisplayArea(area);
+            //HeroService heroService = new HeroService();
+            //BattleService battleService = new BattleService();
+            //while (hero.Incarnation > 0)
+            //{
+            //    Monster monster = CreateMonster();
+            //    bool hasHeroWon = hero.Encounter(monster);
+            //    heroService.UpdateHero(hero);
+            //    battleService.RegisterBattle(hero, monster, hasHeroWon);
+            //}
         }
 
 
@@ -126,6 +129,47 @@ namespace RPGame.Entities.Games
                     break;
             }
             return monster;
+        }
+        private char[,] CreateArea()
+        {
+            char[,] area = new char[15, 15];
+            for (int i = 0; i < 15; i++)
+            {
+                for (int j = 0; j < 15; j++)
+                {
+                    area[i, j] = '_';
+                }
+            }
+            return area;
+        }
+        private void PopulateArea(char[,] area)
+        {
+            // On crée un counter pour compter les monstres dans le tableau
+            // Dérouler de gauche à droite, de haut en bas
+            // On check qu'il y a pas de monstre à moins de 2 cases vers la gauche
+            // On check qu'il y a pas de monstre à moins de 2 cases vers le haut
+            // On jette un dé pour voir si on crée un monstre (1 chance sur 3?)
+            // Si oui, on ajoute le monstre à une liste et on enregistre les positions X et Y du Monstre
+            // On s'arrête quand il y a 10 monstres dans le counter
+
+        }
+
+        private bool AreAllMonstersDead()
+        {
+            bool areAllMonstersDead = false;
+            // Vérifier que tous les monstres sont morts
+            return areAllMonstersDead;
+        }
+        private void DisplayArea(char[,] area)
+        {
+            for (int i = 0; i < 15; i++)
+            {
+                for (int j = 0; j < 15; j++)
+                {
+                    Console.Write(area[i,j]);
+                }
+                Console.WriteLine();
+            }
         }
     }
 }

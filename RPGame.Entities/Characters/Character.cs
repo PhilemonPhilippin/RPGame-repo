@@ -4,6 +4,9 @@ namespace RPGame.Entities.Characters
 {
     public class Character
     {
+        public int Xindex { get; set; }
+        public int Yindex { get; set; }
+
         private string _name;
 
         public string Name
