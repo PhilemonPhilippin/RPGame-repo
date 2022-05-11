@@ -154,7 +154,6 @@ namespace RPGame.Entities.Characters.Heroes
         }
         private void TryToRunAway(int diceFaces)
         {
-            bool hasRunAway;
             Dice dice = new Dice();
             dice.SetDiceFaces(diceFaces);
             int diceResult = dice.Roll();
