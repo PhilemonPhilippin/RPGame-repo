@@ -110,6 +110,7 @@ namespace RPGame.Entities.Characters.Heroes
         {
             Console.WriteLine("=========================================");
             Console.WriteLine($"You encounter a wild {monster.Name}.");
+            monster.DisplayStats();
             string choice = AskFightOrRun();
             if (choice == "run")
                 TryToRunAway(5);

@@ -30,7 +30,7 @@ namespace RPGame.Entities.Characters
         }
         private double _stamina;
 
-        public double Stamina
+        public virtual double Stamina
         {
             get { return _stamina; }
             private set { _stamina = value; }
