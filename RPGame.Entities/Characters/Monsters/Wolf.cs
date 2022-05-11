@@ -10,7 +10,8 @@
             SetStrength(CalculateStrength());
             Damage = Strength;
             Block = CalculateBlock();
-            Gold = CalculateGold();
+            Gold = 0;
+            Leather = CalculateLeather();
             Fame = 15;
         }
     }

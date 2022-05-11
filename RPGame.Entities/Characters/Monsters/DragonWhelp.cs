@@ -1,18 +1,20 @@
 ﻿namespace RPGame.Entities.Characters.Monsters
 {
-    public class Orc : Monster
+    public class DragonWhelp : Monster
     {
-        public Orc()
+        public DragonWhelp()
         {
-            Name = "Orc";
+            Name = "DragonWhelp";
             SetStamina(CalculateStamina(1));
             SetHealth(Stamina + CalculateModifier(Stamina));
-            SetStrength(CalculateStrength());
+            SetStrength(CalculateStrength(1));
             Damage = Strength;
             Block = CalculateBlock();
             Gold = CalculateGold();
-            Leather = 0;
-            Fame = 45;
+            Leather = CalculateLeather();
+            Fame = 60;
         }
+        
+
     }
 }

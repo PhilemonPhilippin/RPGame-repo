@@ -5,7 +5,7 @@ namespace RPGame.Services
 {
     public class HeroService
     {
-        string connectionString = @"Data Source=DESKTOP-OGDC409;Initial Catalog=RPGame;Integrated Security=True;Connect Timeout=60;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+        string connectionString = @"Data Source=ICT-202-08\SQL2019DEV;Initial Catalog=RPGame;Integrated Security=True;Connect Timeout=60;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
         public void InsertHero(Hero hero)
         {
             using (SqlConnection connection = new SqlConnection())
@@ -13,7 +13,7 @@ namespace RPGame.Services
                 connection.ConnectionString = connectionString;
                 using (SqlCommand command = connection.CreateCommand())
                 {
-                    command.CommandText = "INSERT INTO Hero (Name, Stamina, MaxHealth, MaxMana, ManaPotion, Strength, Block, Experience, Level, Incarnation, Gold, Race) output inserted.Id VALUES (@Name, @Stamina, @MaxHealth, @MaxMana, @ManaPotion, @Strength, @Block, @Experience, @Level, @Incarnation, @Gold, @Race);";
+                    command.CommandText = "INSERT INTO Hero (Name, Stamina, MaxHealth, MaxMana, ManaPotion, Strength, Block, Experience, Level, Incarnation, Gold, Race, Leather) output inserted.Id VALUES (@Name, @Stamina, @MaxHealth, @MaxMana, @ManaPotion, @Strength, @Block, @Experience, @Level, @Incarnation, @Gold, @Race, @Leather);";
                     command.Parameters.AddWithValue("Name", hero.Name);
                     command.Parameters.AddWithValue("Stamina", hero.Stamina);
                     command.Parameters.AddWithValue("MaxHealth", hero.MaxHealth);
@@ -26,6 +26,7 @@ namespace RPGame.Services
                     command.Parameters.AddWithValue("Incarnation", hero.Incarnation);
                     command.Parameters.AddWithValue("Gold", hero.Gold);
                     command.Parameters.AddWithValue("Race", hero.Race);
+                    command.Parameters.AddWithValue("Leather", hero.Leather);
                     connection.Open();
                     hero.Id = (int) command.ExecuteScalar();
                 }
@@ -39,7 +40,7 @@ namespace RPGame.Services
                 connection.ConnectionString = connectionString;
                 using (SqlCommand command = connection.CreateCommand())
                 {
-                    command.CommandText = "UPDATE Hero SET Stamina = @Stamina, MaxHealth = @MaxHealth, MaxMana = @MaxMana, ManaPotion = @ManaPotion, Strength = @Strength, Block = @Block, Experience = @Experience, Level = @Level, Incarnation = @Incarnation, Gold = @Gold WHERE Id = @Id;";
+                    command.CommandText = "UPDATE Hero SET Stamina = @Stamina, MaxHealth = @MaxHealth, MaxMana = @MaxMana, ManaPotion = @ManaPotion, Strength = @Strength, Block = @Block, Experience = @Experience, Level = @Level, Incarnation = @Incarnation, Gold = @Gold, Leather = @Leather WHERE Id = @Id;";
                     command.Parameters.AddWithValue("Stamina", hero.Stamina);
                     command.Parameters.AddWithValue("MaxHealth", hero.MaxHealth);
                     command.Parameters.AddWithValue("MaxMana", hero.MaxMana);
@@ -51,6 +52,7 @@ namespace RPGame.Services
                     command.Parameters.AddWithValue("Incarnation", hero.Incarnation);
                     command.Parameters.AddWithValue("Gold", hero.Gold);
                     command.Parameters.AddWithValue("Id", hero.Id);
+                    command.Parameters.AddWithValue("Leather", hero.Leather);
                     connection.Open();
                     command.ExecuteNonQuery();
                 }
@@ -107,6 +109,7 @@ namespace RPGame.Services
                             hero.Incarnation = (int)reader["Incarnation"];
                             hero.Gold = (int)reader["Gold"];
                             hero.Race = (string)reader["Race"];
+                            hero.Leather = (int)reader["Leather"];
                         }
                     }
                 }

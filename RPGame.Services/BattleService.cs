@@ -6,7 +6,7 @@ namespace RPGame.Services
 {
     public class BattleService
     {
-        string connectionString = @"Data Source=DESKTOP-OGDC409;Initial Catalog=RPGame;Integrated Security=True;Connect Timeout=60;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+        string connectionString = @"Data Source=ICT-202-08\SQL2019DEV;Initial Catalog=RPGame;Integrated Security=True;Connect Timeout=60;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
 
         public void RegisterBattle(Hero hero, Monster monster, bool hasHeroWon)
         {

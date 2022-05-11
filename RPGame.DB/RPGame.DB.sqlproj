@@ -63,5 +63,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="RPGame.DB.publish.xml" />
+    <None Include="RPGame_1.DB.publish.xml" />
   </ItemGroup>
 </Project>

@@ -44,5 +44,12 @@ namespace RPGame.Entities.Characters.Monsters
             int gold = dice.Roll();
             return gold;
         }
+        public int CalculateLeather()
+        {
+            Dice dice = new Dice();
+            dice.SetDiceFaces(4);
+            int leather = dice.Roll();
+            return leather;
+        }
     }
 }

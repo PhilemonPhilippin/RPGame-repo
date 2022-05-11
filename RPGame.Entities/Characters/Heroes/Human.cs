@@ -18,7 +18,8 @@
             Experience = 0;
             Level = 1;
             Incarnation = 3;
-            Gold = 6;
+            Gold = 0;
+            Leather = 0;
         }
 
     }

@@ -2,6 +2,7 @@
 {
     public class Dwarf : Hero
     {
+       
         public Dwarf(string name)
         {
             Race = "dwarf";
@@ -18,7 +19,8 @@
             Experience = 0;
             Level = 1;
             Incarnation = 3;
-            Gold = 10;
+            Gold = 0;
+            Leather = 0;
         }
     }
 }

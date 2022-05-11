@@ -13,5 +13,6 @@
 	[Incarnation] INT NOT NULL,
 	[Gold] INT NOT NULL,
     [Race] VARCHAR(50) NOT NULL,
-	CONSTRAINT PK_Hero PRIMARY KEY ([Id])
+	[Leather] INT NOT NULL, 
+    CONSTRAINT PK_Hero PRIMARY KEY ([Id])
 )

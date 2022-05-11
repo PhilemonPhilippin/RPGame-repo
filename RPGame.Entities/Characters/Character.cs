@@ -45,7 +45,7 @@ namespace RPGame.Entities.Characters
 
         private double _strength;
 
-        public double Strength
+        public virtual double Strength
         {
             get { return _strength; }
             private set 
@@ -122,6 +122,12 @@ namespace RPGame.Entities.Characters
         {
             get { return _gold; }
             set { _gold = value; }
+        }
+        private int _leather;
+        public int Leather
+        {
+            get { return _leather; }
+            set { _leather = value; }
         }
 
         public double CalculateStamina()

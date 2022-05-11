@@ -103,7 +103,7 @@ namespace RPGame.Entities.Characters.Heroes
         public void DisplayStats()
         {
             Console.WriteLine($"Your name is {Name}, you have {Stamina} Stamina, {Health} Health, {Strength} Strength and {Block} Block.");
-            Console.WriteLine($"You also have {Mana} Mana, {ManaPotion} Mana potions, {Incarnation} Incarnations and {Gold} Gold.");
+            Console.WriteLine($"You also have {Mana} Mana, {ManaPotion} Mana potions, {Incarnation} Incarnations, {Gold} Gold and {Leather} leather.");
             Console.WriteLine($"You are level {Level} and have {Experience} experience.");
         }
         public bool Encounter(Monster monster)
@@ -122,13 +122,14 @@ namespace RPGame.Entities.Characters.Heroes
                 Console.WriteLine("You have slain the monster.");
                 hasHeroWon = true;
                 Gold += monster.Gold;
+                Leather += monster.Leather;
                 Experience += monster.Fame;
                 LevelUp();
                 SetHealth(MaxHealth);
                 Mana = MaxMana;
                 DisplayStats();
             }
-            else if (this.Health == 0)
+            else if (Health == 0)
             {
                 Console.WriteLine("The monster destroyed you.");
                 hasHeroWon = false;
@@ -153,6 +154,7 @@ namespace RPGame.Entities.Characters.Heroes
         }
         private void TryToRunAway(int diceFaces)
         {
+            bool hasRunAway;
             Dice dice = new Dice();
             dice.SetDiceFaces(diceFaces);
             int diceResult = dice.Roll();
@@ -169,12 +171,17 @@ namespace RPGame.Entities.Characters.Heroes
             DamageStack = CalculateStrikeDamage();
             monster.DamageStack = monster.CalculateStrikeDamage();
             bool isHerosTurn = true;
-            while (Health != 0 && monster.Health != 0)
+            bool hasHeroRun = false;
+            while (Health != 0 && monster.Health != 0 && !hasHeroRun)
             {
                 if (isHerosTurn)
                 {
                     string heroAction = AskFightAction();
                     HeroAction(monster, heroAction);
+
+                    if (heroAction == "run")
+                        hasHeroRun = true;
+
                     Console.WriteLine($"Monster health: {monster.Health}");
                     isHerosTurn = false;
                 }

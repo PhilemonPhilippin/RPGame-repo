@@ -109,12 +109,22 @@ namespace RPGame.Entities.Games
             Dice dice = new Dice();
             dice.SetDiceFaces(6);
             int diceResult = dice.Roll();
-            if (diceResult == 6)
-                monster = new Orc();
-            else if (diceResult >= 4)
-                monster = new Goblin();
-            else
-                monster = new Wolf();
+            switch (diceResult)
+            {
+                case 1:
+                    monster = new DragonWhelp();
+                    break;
+                case 2:
+                    monster = new Orc();
+                    break;
+                case 3:
+                case 4:
+                    monster = new Goblin();
+                    break;
+                default:
+                    monster = new Wolf();
+                    break;
+            }
             return monster;
         }
     }
