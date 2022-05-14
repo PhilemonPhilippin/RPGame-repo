@@ -15,7 +15,7 @@ namespace RPGame.Entities.Characters.Monsters
         public void MonsterAction(Hero hero)
         {
             Dice dice = new Dice();
-            dice.SetDiceFaces(5);
+            dice.SetDiceFaces(6);
             int diceResult = dice.Roll();
             switch (diceResult)
             {

@@ -6,7 +6,12 @@ namespace RPGame.Entities.Games
 {
     public class Game
     {
-        //TODO: Zones, Weapons, Shop
+        //TODO: Zones
+        //Weapons, Shop
+        //Refactor
+        //Encapsulate
+        //Composition>Inheritance
+        //Too many detailed props : refactor too
         public void Run()
         {
             //Hero hero = GreetPlayer();
