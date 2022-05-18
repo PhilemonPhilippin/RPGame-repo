@@ -3,22 +3,14 @@ using RPGame.Entities.Games;
 
 namespace RPGame.Entities.Characters.Heroes
 {
-    public class Hero : Character
+    public class Hero : Character, IHero
     {
         public int Id { get; set; }
 
         public string Race { get; set; }
 
-        private double _maxHealth;
 
-        public double MaxHealth
-        {
-            get { return _maxHealth; }
-            private set 
-            {
-                _maxHealth = value; 
-            }
-        }
+        public double MaxHealth { get; set; }
         public void SetMaxHealth(double value)
         {
             if (value < 0)
@@ -26,87 +18,20 @@ namespace RPGame.Entities.Characters.Heroes
             else
                 MaxHealth = value;
         }
-        private double _mana;
+        public double Mana { get; set; }
+        public double MaxMana { get; set; }
+        public int ManaPotion { get; set; }
 
-        public double Mana
-        {
-            get { return _mana; }
-            set 
-            {
-                if (value < 0)
-                    _mana = 0;
-                else
-                    _mana = value; 
-            }
-        }
-        private double _maxMana;
-
-        public double MaxMana
-        {
-            get { return _maxMana; }
-            set 
-            {
-                if (value < 0)
-                    _maxMana = 0;
-                else
-                    _maxMana = value; 
-            }
-        }
-        private int _manaPotion;
-
-        public int ManaPotion
-        {
-            get { return _manaPotion; }
-            set 
-            {
-                if (value < 0)
-                    _manaPotion = 0;
-                else
-                    _manaPotion = value; 
-            }
-        }
-
-        private double _experience;
-
-        public double Experience
-        {
-            get { return _experience; }
-            set 
-            {
-                if (value < 0)
-                    _experience = 0;
-                else
-                    _experience = value; 
-
-            }
-        }
-        private int _level;
-
-        public int Level
-        {
-            get { return _level; }
-            set { _level = value; }
-        }
-        private int _incarnation;
-
-        public int Incarnation
-        {
-            get { return _incarnation; }
-            set 
-            {
-                if (value < -1)
-                    _incarnation = -1;
-                else
-                    _incarnation = value; 
-            }
-        }
+        public double Experience { get; set; }
+        public int Level { get; set; }
+        public int Incarnation { get; set; }
         public void DisplayStats()
         {
             Console.WriteLine($"Your name is {Name}, you have {Stamina} Stamina, {Health} Health, {Strength} Strength and {Block} Block.");
             Console.WriteLine($"You also have {Mana} Mana, {ManaPotion} Mana potions, {Incarnation} Incarnations, {Gold} Gold and {Leather} leather.");
             Console.WriteLine($"You are level {Level} and have {Experience} experience.");
         }
-        public bool Encounter(Monster monster)
+        public bool Encounter(IMonster monster)
         {
             Console.WriteLine("=========================================");
             Console.WriteLine($"You encounter a wild {monster.Name}.");
@@ -142,7 +67,7 @@ namespace RPGame.Entities.Characters.Heroes
             Console.WriteLine("The encounter is over.");
             return hasHeroWon;
         }
-        private string AskFightOrRun()
+        public string AskFightOrRun()
         {
             string heroChoice;
             do
@@ -153,7 +78,7 @@ namespace RPGame.Entities.Characters.Heroes
             } while (heroChoice != "fight" && heroChoice != "run");
             return heroChoice;
         }
-        private void TryToRunAway(int diceFaces)
+        public void TryToRunAway(int diceFaces)
         {
             Dice dice = new Dice();
             dice.SetDiceFaces(diceFaces);
@@ -166,7 +91,7 @@ namespace RPGame.Entities.Characters.Heroes
             else
                 Console.WriteLine("You run away.");
         }
-        private void Fight(Monster monster)
+        public void Fight(IMonster monster)
         {
             DamageStack = CalculateStrikeDamage();
             monster.DamageStack = monster.CalculateStrikeDamage();
@@ -193,7 +118,7 @@ namespace RPGame.Entities.Characters.Heroes
                 }
             }
         }
-        private string AskFightAction()
+        public string AskFightAction()
         {
             string heroAction;
             bool isHeroActionValid;
@@ -212,7 +137,7 @@ namespace RPGame.Entities.Characters.Heroes
             } while (!isHeroActionValid);
             return heroAction;
         }
-        private void CastSpell()
+        public void CastSpell()
         {
             string spell;
             do
@@ -230,7 +155,7 @@ namespace RPGame.Entities.Characters.Heroes
                 }
             } while (spell != "heal");
         }
-        private void Heal()
+        public void Heal()
         {
             if (Mana < 50)
                 Console.WriteLine("You don't have enough mana to heal yourself. You need 50 mana.");
@@ -241,7 +166,7 @@ namespace RPGame.Entities.Characters.Heroes
                 Console.WriteLine("You heal yourself.");
             }
         }
-        private void DrinkManaPotion()
+        public void DrinkManaPotion()
         {
             if (ManaPotion <= 0)
                 Console.WriteLine("You don't have any mana potion left.");
@@ -255,7 +180,7 @@ namespace RPGame.Entities.Characters.Heroes
                 Console.WriteLine("You drink a mana potion");
             }
         }
-        private void HeroAction(Monster monster, string heroAction)
+        public void HeroAction(IMonster monster, string heroAction)
         {
             switch (heroAction)
             {
@@ -290,7 +215,7 @@ namespace RPGame.Entities.Characters.Heroes
                     break;
             }
         }
-        private void LevelUp()
+        public void LevelUp()
         {
             if (Experience >= 100)
             {

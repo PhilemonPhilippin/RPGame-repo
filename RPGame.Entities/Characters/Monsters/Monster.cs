@@ -3,15 +3,9 @@ using RPGame.Entities.Games;
 
 namespace RPGame.Entities.Characters.Monsters
 {
-    public class Monster : Character
+    public class Monster : Character, IMonster
     {
-        private int _fame;
-
-        public int Fame
-        {
-            get { return _fame; }
-            set { _fame = value; }
-        }
+        public int Fame { get; set; }
         public void MonsterAction(Hero hero)
         {
             Dice dice = new Dice();

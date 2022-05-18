@@ -12,26 +12,27 @@ namespace RPGame.Entities.Games
         //Encapsulate
         //Composition>Inheritance
         //Too many detailed props : refactor too
+        //Erase methods that are not used (setstrength etc) because i changed encapsulation
         public void Run()
         {
-            //Hero hero = GreetPlayer();
-            //hero.DisplayStats();
-            char[,] area = CreateArea();
-            PopulateArea(area);
-            DisplayArea(area);
-            //HeroService heroService = new HeroService();
-            //BattleService battleService = new BattleService();
-            //while (hero.Incarnation > 0)
-            //{
-            //    Monster monster = CreateMonster();
-            //    bool hasHeroWon = hero.Encounter(monster);
-            //    heroService.UpdateHero(hero);
-            //    battleService.RegisterBattle(hero, monster, hasHeroWon);
-            //}
+            IHero hero = GreetPlayer();
+            hero.DisplayStats();
+            //char[,] area = CreateArea();
+            //PopulateArea(area);
+            //DisplayArea(area);
+            HeroService heroService = new HeroService();
+            BattleService battleService = new BattleService();
+            while (hero.Incarnation > 0)
+            {
+                IMonster monster = CreateMonster();
+                bool hasHeroWon = hero.Encounter(monster);
+                heroService.UpdateHero(hero);
+                battleService.RegisterBattle(hero, monster, hasHeroWon);
+            }
         }
 
 
-        private Hero GreetPlayer()
+        private IHero GreetPlayer()
         {
             Console.WriteLine("Hello. Do you want to create a new hero or to load a saved one ?");
             string answer = "";
@@ -40,16 +41,16 @@ namespace RPGame.Entities.Games
                 Console.WriteLine("Write 'new' or 'load'...");
                 answer = Console.ReadLine();
             } while (answer != "new" && answer != "load");
-            Hero hero;
+            IHero hero;
             if (answer == "new")
                 hero = CreateHero();
             else
                 hero = LoadHero();
             return hero;
         }
-        private Hero LoadHero()
+        private IHero LoadHero()
         {
-            Hero hero;
+            IHero hero;
             bool isHeroFound = false;
             do
             {
@@ -70,11 +71,11 @@ namespace RPGame.Entities.Games
             return hero;
         }
 
-        private Hero CreateHero()
+        private IHero CreateHero()
         {
             string heroName = GetHeroName();
             string race = GetHeroRace(heroName);
-            Hero hero = CreateHero(heroName, race);
+            IHero hero = CreateHero(heroName, race);
             return hero;
         }
         private string GetHeroName()
@@ -99,9 +100,9 @@ namespace RPGame.Entities.Games
             } while (race != "dwarf" && race != "human");
             return race;
         }
-        private Hero CreateHero(string heroName, string race)
+        private IHero CreateHero(string heroName, string race)
         {
-            Hero hero;
+            IHero hero;
             if (race == "dwarf")
                 hero = new Dwarf(heroName);
             else

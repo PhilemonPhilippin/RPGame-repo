@@ -6,9 +6,9 @@ namespace RPGame.Services
 {
     public class BattleService
     {
-        string connectionString = @"Data Source=ICT-202-08\SQL2019DEV;Initial Catalog=RPGame;Integrated Security=True;Connect Timeout=60;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+        string connectionString = @"Data Source=DESKTOP-BM3GQ1I;Initial Catalog=RPGame;Integrated Security=True;Connect Timeout=60;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
 
-        public void RegisterBattle(Hero hero, Monster monster, bool hasHeroWon)
+        public void RegisterBattle(IHero hero, IMonster monster, bool hasHeroWon)
         {
             using (SqlConnection connection = new SqlConnection())
             {
