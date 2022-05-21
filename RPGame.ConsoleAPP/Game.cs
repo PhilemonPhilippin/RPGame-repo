@@ -11,20 +11,26 @@ namespace RPGame.Entities.Games
         //Refactor
         public void Run()
         {
-            Hero hero = GreetPlayer();
-            hero.DisplayStats();
-            //char[,] area = CreateArea();
-            //PopulateArea(area);
-            //DisplayArea(area);
-            HeroService heroService = new HeroService();
-            BattleService battleService = new BattleService();
-            while (hero.Incarnation > 0)
+            //Hero hero = GreetPlayer();
+            //hero.DisplayStats();
+            List<Monster> monsters = new List<Monster>();
+            char[,] area = CreateArea();
+            DisplayArea(area);
+            PopulateArea(area, monsters);
+            DisplayArea(area);
+            foreach (Monster monster in monsters)
             {
-                Monster monster = CreateMonster();
-                bool hasHeroWon = hero.Encounter(monster);
-                heroService.UpdateHero(hero);
-                battleService.RegisterBattle(hero, monster, hasHeroWon);
+                Console.WriteLine("Monster name: " + monster.Name);
             }
+            //HeroService heroService = new HeroService();
+            //BattleService battleService = new BattleService();
+            //while (hero.Incarnation > 0)
+            //{
+            //    Monster monster = CreateMonster();
+            //    bool hasHeroWon = hero.Encounter(monster);
+            //    heroService.UpdateHero(hero);
+            //    battleService.RegisterBattle(hero, monster, hasHeroWon);
+            //}
         }
 
 
@@ -144,16 +150,72 @@ namespace RPGame.Entities.Games
             }
             return area;
         }
-        private void PopulateArea(char[,] area)
+        private void PopulateArea(char[,] area, List<Monster> monsters)
         {
-            // On crée un counter pour compter les monstres dans le tableau
-            // Dérouler de gauche à droite, de haut en bas
-            // On check qu'il y a pas de monstre à moins de 2 cases vers la gauche
-            // On check qu'il y a pas de monstre à moins de 2 cases vers le haut
-            // On jette un dé pour voir si on crée un monstre (1 chance sur 3?)
-            // Si oui, on ajoute le monstre à une liste et on enregistre les positions X et Y du Monstre
-            // On s'arrête quand il y a 10 monstres dans le counter
+            int monsterCounter = 0;
+            // 1 chance sur 18 peuple souvent le tableau de 10 monstres et ils sont souvent bien repartis
+            Dice dice = new Dice();
+            dice.SetDiceFaces(18);
+            for (int i = 0; i < 15; i++)
+            {
+                for (int j = 0; j < 15; j++)
+                {
+                    if (!IsThereMonsterLeftSide(area,i,j) && !IsThereMonsterTopSide(area,i,j))
+                    {
+                        // On jette un dé pour voir si on crée un monstre (1 chance sur 18)
+                        int roll = dice.Roll();
+                        if (roll == 1 && monsterCounter < 10)
+                        {
+                            Monster monster = CreateMonster();
+                            monster.Xindex = j;
+                            monster.Yindex = i;
+                            monsters.Add(monster);
+                            switch (monster)
+                            {
+                                case Wolf:
+                                    area[i, j] = 'W';
+                                    break;
+                                case Goblin:
+                                    area[i, j] = 'G';
+                                    break;
+                                case Orc:
+                                    area[i, j] = 'O';
+                                    break;
+                                default:
+                                    area[i, j] = 'D';
+                                    break;
+                            }
+                            monsterCounter++;
+                        }
+                    }
+                }
+            }
+            
 
+        }
+        private bool IsThereMonsterLeftSide(char[,] area, int i, int j)
+        {
+            bool isThereMonster = false;
+            if (j > 1)
+            {
+                if (area[i, j - 1] != '_' || area[i, j - 2] != '_')
+                {
+                    isThereMonster = true;
+                }
+            }
+            return isThereMonster;
+        }
+        private bool IsThereMonsterTopSide(char[,] area, int i, int j)
+        {
+            bool isThereMonster = false;
+            if (i > 1)
+            {
+                if (area[i - 1, j] != '_' || area[i - 2, j] != '_')
+                {
+                    isThereMonster = true;
+                }
+            }
+            return isThereMonster;
         }
 
         private bool AreAllMonstersDead()
