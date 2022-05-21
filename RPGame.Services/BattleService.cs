@@ -8,7 +8,7 @@ namespace RPGame.Services
     {
         string connectionString = @"Data Source=DESKTOP-BM3GQ1I;Initial Catalog=RPGame;Integrated Security=True;Connect Timeout=60;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
 
-        public void RegisterBattle(IHero hero, IMonster monster, bool hasHeroWon)
+        public void RegisterBattle(Hero hero, Monster monster, bool hasHeroWon)
         {
             using (SqlConnection connection = new SqlConnection())
             {

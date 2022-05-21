@@ -3,14 +3,14 @@ using RPGame.Entities.Games;
 
 namespace RPGame.Entities.Characters.Heroes
 {
-    public class Hero : Character, IHero
+    public class Hero : Character
     {
         public int Id { get; set; }
 
         public string Race { get; set; }
 
 
-        public double MaxHealth { get; set; }
+        public double MaxHealth { get; private set; }
         public void SetMaxHealth(double value)
         {
             if (value < 0)
@@ -31,7 +31,7 @@ namespace RPGame.Entities.Characters.Heroes
             Console.WriteLine($"You also have {Mana} Mana, {ManaPotion} Mana potions, {Incarnation} Incarnations, {Gold} Gold and {Leather} leather.");
             Console.WriteLine($"You are level {Level} and have {Experience} experience.");
         }
-        public bool Encounter(IMonster monster)
+        public bool Encounter(Monster monster)
         {
             Console.WriteLine("=========================================");
             Console.WriteLine($"You encounter a wild {monster.Name}.");
@@ -67,7 +67,7 @@ namespace RPGame.Entities.Characters.Heroes
             Console.WriteLine("The encounter is over.");
             return hasHeroWon;
         }
-        public string AskFightOrRun()
+        private string AskFightOrRun()
         {
             string heroChoice;
             do
@@ -78,7 +78,7 @@ namespace RPGame.Entities.Characters.Heroes
             } while (heroChoice != "fight" && heroChoice != "run");
             return heroChoice;
         }
-        public void TryToRunAway(int diceFaces)
+        private void TryToRunAway(int diceFaces)
         {
             Dice dice = new Dice();
             dice.SetDiceFaces(diceFaces);
@@ -91,7 +91,7 @@ namespace RPGame.Entities.Characters.Heroes
             else
                 Console.WriteLine("You run away.");
         }
-        public void Fight(IMonster monster)
+        private void Fight(Monster monster)
         {
             DamageStack = CalculateStrikeDamage();
             monster.DamageStack = monster.CalculateStrikeDamage();
@@ -118,7 +118,7 @@ namespace RPGame.Entities.Characters.Heroes
                 }
             }
         }
-        public string AskFightAction()
+        private string AskFightAction()
         {
             string heroAction;
             bool isHeroActionValid;
@@ -137,7 +137,7 @@ namespace RPGame.Entities.Characters.Heroes
             } while (!isHeroActionValid);
             return heroAction;
         }
-        public void CastSpell()
+        private void CastSpell()
         {
             string spell;
             do
@@ -155,7 +155,7 @@ namespace RPGame.Entities.Characters.Heroes
                 }
             } while (spell != "heal");
         }
-        public void Heal()
+        private void Heal()
         {
             if (Mana < 50)
                 Console.WriteLine("You don't have enough mana to heal yourself. You need 50 mana.");
@@ -166,7 +166,7 @@ namespace RPGame.Entities.Characters.Heroes
                 Console.WriteLine("You heal yourself.");
             }
         }
-        public void DrinkManaPotion()
+        private void DrinkManaPotion()
         {
             if (ManaPotion <= 0)
                 Console.WriteLine("You don't have any mana potion left.");
@@ -180,7 +180,7 @@ namespace RPGame.Entities.Characters.Heroes
                 Console.WriteLine("You drink a mana potion");
             }
         }
-        public void HeroAction(IMonster monster, string heroAction)
+        private void HeroAction(Monster monster, string heroAction)
         {
             switch (heroAction)
             {
@@ -215,7 +215,7 @@ namespace RPGame.Entities.Characters.Heroes
                     break;
             }
         }
-        public void LevelUp()
+        private void LevelUp()
         {
             if (Experience >= 100)
             {

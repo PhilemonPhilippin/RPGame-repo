@@ -7,7 +7,7 @@ namespace RPGame.Services
     {
         string connectionString = @"Data Source=DESKTOP-BM3GQ1I;Initial Catalog=RPGame;Integrated Security=True;Connect Timeout=60;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
         
-        public void InsertHero(IHero hero)
+        public void InsertHero(Hero hero)
         {
             using (SqlConnection connection = new SqlConnection())
             {
@@ -34,7 +34,7 @@ namespace RPGame.Services
             }
         }
 
-        public void UpdateHero(IHero hero)
+        public void UpdateHero(Hero hero)
         {
             using (SqlConnection connection = new SqlConnection())
             {
@@ -78,11 +78,11 @@ namespace RPGame.Services
                 }
             }
         }
-        public IHero GetHero(int id)
+        public Hero GetHero(int id)
         {
             using (SqlConnection connection = new SqlConnection())
             {
-                IHero hero = new Hero();
+                Hero hero = new Hero();
                 connection.ConnectionString = connectionString;
                 using (SqlCommand command = connection.CreateCommand())
                 {

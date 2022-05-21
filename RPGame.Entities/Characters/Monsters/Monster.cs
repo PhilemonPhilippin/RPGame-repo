@@ -3,7 +3,7 @@ using RPGame.Entities.Games;
 
 namespace RPGame.Entities.Characters.Monsters
 {
-    public class Monster : Character, IMonster
+    public class Monster : Character
     {
         public int Fame { get; set; }
         public void MonsterAction(Hero hero)

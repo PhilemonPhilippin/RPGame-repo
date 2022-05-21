@@ -2,13 +2,13 @@
 
 namespace RPGame.Entities.Characters
 {
-    public abstract class Character : ICharacter
+    public abstract class Character
     {
         public int Xindex { get; set; }
         public int Yindex { get; set; }
 
         public string Name { get; set; }
-        public double Health { get; set; }
+        public double Health { get; private set; }
         public void SetHealth(double value)
         {
             if (value < 0)
@@ -16,7 +16,7 @@ namespace RPGame.Entities.Characters
             else
                 Health = value;
         }
-        public virtual double Stamina { get; set; }
+        public virtual double Stamina { get; private set; }
         public void SetStamina(double value)
         {
             if (value < 0)
@@ -25,7 +25,7 @@ namespace RPGame.Entities.Characters
                 Stamina = value;
         }
 
-       public virtual double Strength { get; set; }
+       public virtual double Strength { get; private set; }
         public void SetStrength(double value)
         {
             if (value < 0)

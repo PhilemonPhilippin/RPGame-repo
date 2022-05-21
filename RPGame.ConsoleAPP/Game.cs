@@ -9,13 +9,9 @@ namespace RPGame.Entities.Games
         //TODO: Zones
         //Weapons, Shop
         //Refactor
-        //Encapsulate
-        //Composition>Inheritance
-        //Too many detailed props : refactor too
-        //Erase methods that are not used (setstrength etc) because i changed encapsulation
         public void Run()
         {
-            IHero hero = GreetPlayer();
+            Hero hero = GreetPlayer();
             hero.DisplayStats();
             //char[,] area = CreateArea();
             //PopulateArea(area);
@@ -24,7 +20,7 @@ namespace RPGame.Entities.Games
             BattleService battleService = new BattleService();
             while (hero.Incarnation > 0)
             {
-                IMonster monster = CreateMonster();
+                Monster monster = CreateMonster();
                 bool hasHeroWon = hero.Encounter(monster);
                 heroService.UpdateHero(hero);
                 battleService.RegisterBattle(hero, monster, hasHeroWon);
@@ -32,7 +28,7 @@ namespace RPGame.Entities.Games
         }
 
 
-        private IHero GreetPlayer()
+        private Hero GreetPlayer()
         {
             Console.WriteLine("Hello. Do you want to create a new hero or to load a saved one ?");
             string answer = "";
@@ -41,16 +37,16 @@ namespace RPGame.Entities.Games
                 Console.WriteLine("Write 'new' or 'load'...");
                 answer = Console.ReadLine();
             } while (answer != "new" && answer != "load");
-            IHero hero;
+            Hero hero;
             if (answer == "new")
                 hero = CreateHero();
             else
                 hero = LoadHero();
             return hero;
         }
-        private IHero LoadHero()
+        private Hero LoadHero()
         {
-            IHero hero;
+            Hero hero;
             bool isHeroFound = false;
             do
             {
@@ -71,11 +67,11 @@ namespace RPGame.Entities.Games
             return hero;
         }
 
-        private IHero CreateHero()
+        private Hero CreateHero()
         {
             string heroName = GetHeroName();
             string race = GetHeroRace(heroName);
-            IHero hero = CreateHero(heroName, race);
+            Hero hero = CreateHero(heroName, race);
             return hero;
         }
         private string GetHeroName()
@@ -100,9 +96,9 @@ namespace RPGame.Entities.Games
             } while (race != "dwarf" && race != "human");
             return race;
         }
-        private IHero CreateHero(string heroName, string race)
+        private Hero CreateHero(string heroName, string race)
         {
-            IHero hero;
+            Hero hero;
             if (race == "dwarf")
                 hero = new Dwarf(heroName);
             else
