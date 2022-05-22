@@ -227,5 +227,85 @@ namespace RPGame.Entities.Characters.Heroes
                 Console.WriteLine("Congratulations, you level up!");
             }
         }
+        public void Move(char[,] area)
+        {
+            string direction = AskDirection();
+            switch (direction)
+            {
+                case "left":
+                    MoveLeft(area);
+                    break;
+                case "right":
+                    MoveRight(area);
+                    break;
+                case "up":
+                    MoveUp(area);
+                    break;
+                case "down":
+                    MoveDown(area);
+                    break;
+                default:
+                    Console.WriteLine("No move");
+                    break;
+            }
+        }
+        private string AskDirection()
+        {
+            string answer = "";
+            do
+            {
+                Console.WriteLine("What direction do you choose ?");
+                Console.WriteLine("Write 'left','right', 'up' or 'down'...");
+                answer = Console.ReadLine().ToLower();
+            } while (answer != "left" && answer != "right" && answer != "up" && answer != "down");
+            return answer;
+        }
+
+        private void MoveLeft(char[,] area)
+        {
+            if (Xindex > 0)
+            {
+                area[Yindex, Xindex] = '_';
+                Xindex--;
+                area[Yindex, Xindex] = 'H';
+            }
+            else
+                Console.WriteLine("You can't move left to leave the area");
+        }
+        private void MoveRight(char[,] area)
+        {
+            if (Xindex < 14)
+            {
+                area[Yindex, Xindex] = '_';
+                Xindex++;
+                area[Yindex, Xindex] = 'H';
+            }
+            else
+                Console.WriteLine("You can't move right to leave the area");
+
+        }
+        private void MoveUp(char[,] area)
+        {
+            if (Yindex > 0)
+            {
+                area[Yindex, Xindex] = '_';
+                Yindex--;
+                area[Yindex, Xindex] = 'H';
+            }
+            else
+                Console.WriteLine("You can't move up to leave the area");
+
+        }
+        private void MoveDown(char[,] area)
+        {
+            if (Yindex < 14)
+            {
+                area[Yindex, Xindex] = '_';
+                Yindex++;
+                area[Yindex, Xindex] = 'H';
+            }
+            else
+                Console.WriteLine("You can't move down to leave the area");
+        }
     }
 }

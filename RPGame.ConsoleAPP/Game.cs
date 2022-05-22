@@ -15,6 +15,10 @@ namespace RPGame.Entities.Games
             //hero.DisplayStats();
             List<Monster> monsters = new List<Monster>();
             char[,] area = CreateArea();
+            Hero hero = new Human("GenericName");
+            area[0, 0] = 'H';
+            hero.Xindex = 0;
+            hero.Yindex = 0;
             DisplayArea(area);
             PopulateArea(area, monsters);
             DisplayArea(area);
@@ -22,6 +26,22 @@ namespace RPGame.Entities.Games
             {
                 Console.WriteLine("Monster name: " + monster.Name);
             }
+            bool isThereEncounter = false;
+            string monsterPosition = "";
+            while (!isThereEncounter)
+            {
+                hero.Move(area);
+                DisplayArea(area);
+                monsterPosition = CheckMonsterPosition(area, hero);
+                if (monsterPosition != "none")
+                {
+                    isThereEncounter = true;
+                }
+            }
+            Monster monsterEncountered = GetMonsterEncountered(monsterPosition, monsters, hero);
+            hero.Encounter(monsterEncountered);
+
+
             //HeroService heroService = new HeroService();
             //BattleService battleService = new BattleService();
             //while (hero.Incarnation > 0)
@@ -160,7 +180,7 @@ namespace RPGame.Entities.Games
             {
                 for (int j = 0; j < 15; j++)
                 {
-                    if (!IsThereMonsterLeftSide(area,i,j) && !IsThereMonsterTopSide(area,i,j))
+                    if (!AreLeftBoxesPopulated(area,i,j) && !AreTopBoxesPopulated(area,i,j))
                     {
                         // On jette un dé pour voir si on crée un monstre (1 chance sur 18)
                         int roll = dice.Roll();
@@ -190,32 +210,30 @@ namespace RPGame.Entities.Games
                     }
                 }
             }
-            
-
         }
-        private bool IsThereMonsterLeftSide(char[,] area, int i, int j)
+        private bool AreLeftBoxesPopulated(char[,] area, int i, int j)
         {
-            bool isThereMonster = false;
+            bool isPopulated = false;
             if (j > 1)
             {
                 if (area[i, j - 1] != '_' || area[i, j - 2] != '_')
                 {
-                    isThereMonster = true;
+                    isPopulated = true;
                 }
             }
-            return isThereMonster;
+            return isPopulated;
         }
-        private bool IsThereMonsterTopSide(char[,] area, int i, int j)
+        private bool AreTopBoxesPopulated(char[,] area, int i, int j)
         {
-            bool isThereMonster = false;
+            bool isPopulated = false;
             if (i > 1)
             {
                 if (area[i - 1, j] != '_' || area[i - 2, j] != '_')
                 {
-                    isThereMonster = true;
+                    isPopulated = true;
                 }
             }
-            return isThereMonster;
+            return isPopulated;
         }
 
         private bool AreAllMonstersDead()
@@ -234,6 +252,90 @@ namespace RPGame.Entities.Games
                 }
                 Console.WriteLine();
             }
+        }
+        private string CheckMonsterPosition(char[,] area, Hero hero)
+        {
+            string horizontal = HorizontalCheckMonsterPosition(area, hero);
+            if (horizontal != "none")
+                return horizontal;
+
+            string vertical = VerticalCheckMonsterPosition(area, hero);
+            if (vertical != "none")
+                return vertical;
+
+            return "none";
+        }
+        private string HorizontalCheckMonsterPosition(char[,] area, Hero hero)
+        {
+            // Checking right box.
+            if (hero.Xindex < 14)
+            {
+                if (area[hero.Yindex, hero.Xindex + 1] != '_')
+                    return "right";
+            }
+            // Checking left box.
+            if (hero.Xindex > 0)
+            {
+                if (area[hero.Yindex, hero.Xindex - 1] != '_')
+                    return "left";
+            }
+            return "none";
+
+        }
+        private string VerticalCheckMonsterPosition(char[,] area, Hero hero)
+        {
+            // Checking down box.
+            if (hero.Yindex < 14)
+            {
+                if (area[hero.Yindex + 1, hero.Xindex] != '_')
+                    return "down";
+            }
+            // Checking up box.
+            if (hero.Yindex > 0)
+            {
+                if (area[hero.Yindex - 1, hero.Xindex] != '_')
+                    return "up";
+            }
+            return "none";
+        }
+        private Monster GetMonsterEncountered(string monsterPosition, List<Monster> monsters, Hero hero)
+        {
+            Monster monsterEncountered = new Monster();
+            switch (monsterPosition)
+            {
+                case "right":
+                    foreach (Monster monster in monsters)
+                    {
+                        if (monster.Xindex == hero.Xindex + 1 && monster.Yindex == hero.Yindex)
+                            monsterEncountered = monster;
+                    }
+                    break;
+                case "left":
+                    foreach (Monster monster in monsters)
+                    {
+                        if (monster.Xindex == hero.Xindex - 1 && monster.Yindex == hero.Yindex)
+                            monsterEncountered = monster;
+                    }
+                    break;
+                case "down":
+                    foreach (Monster monster in monsters)
+                    {
+                        if (monster.Xindex == hero.Xindex && monster.Yindex == hero.Yindex + 1)
+                            monsterEncountered = monster;
+                    }
+                    break;
+                case "up":
+                    foreach (Monster monster in monsters)
+                    {
+                        if (monster.Xindex == hero.Xindex && monster.Yindex == hero.Yindex - 1)
+                            monsterEncountered = monster;
+                    }
+                    break;
+                default:
+                    Console.WriteLine("Pas trouvé de monstre.");
+                    break;
+            }
+            return monsterEncountered;
         }
     }
 }
