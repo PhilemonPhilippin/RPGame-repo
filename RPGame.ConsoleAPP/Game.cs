@@ -40,6 +40,11 @@ namespace RPGame.Entities.Games
             }
             Monster monsterEncountered = GetMonsterEncountered(monsterPosition, monsters, hero);
             hero.Encounter(monsterEncountered);
+            // TODO: Recombattre le même monstre si c'est le héro qui meurt.
+            // Retirer le monstre de la liste si le monstre meurt.
+            // Boucler les déplacements et les rencontres jusqu'à ce que le héro n'ait plus de vie...
+            // Ou jusqu'à ce que la liste de monstres soit vide.
+
 
 
             //HeroService heroService = new HeroService();
