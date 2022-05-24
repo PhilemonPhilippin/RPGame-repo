@@ -6,57 +6,58 @@ namespace RPGame.Entities.Games
 {
     public class Game
     {
-        // TODO: Zones.
-        // Weapons, Shop.
-        // Refactor.
+        // TODO:
         // Prévoir une fuite possible.
-        // Rétablir les services.
         // Considérer une interface pour l'utilisation des services.
-        // Rendre static : la zone et la liste de monstres. Eventuellement.
+        // Rétablir les services.
+        // Refactor.
+        // Zones.
+        // Weapons, Shop.
+        private static List<Monster> _Monsters = new List<Monster>();
+        private static char[,] area;
         public void Run()
         {
             
-            List<Monster> monsters = new List<Monster>();
-            char[,] area = CreateArea();
+            area = CreateArea();
             Hero hero = new Human("GenericName");
             area[0, 0] = 'H';
             hero.Xindex = 0;
             hero.Yindex = 0;
-            DisplayArea(area);
-            PopulateArea(area, monsters);
-            DisplayArea(area);
-            foreach (Monster monster in monsters)
+            DisplayArea();
+            PopulateArea();
+            DisplayArea();
+            foreach (Monster monster in _Monsters)
             {
                 Console.WriteLine("Monster name: " + monster.Name);
             }
-            while (hero.Incarnation > 0 && monsters.Count > 0)
+            while (hero.Incarnation > 0 && _Monsters.Count > 0)
             {
                 bool isThereEncounter = false;
                 string monsterPosition = "";
                 while (!isThereEncounter)
                 {
                     hero.Move(area);
-                    DisplayArea(area);
-                    monsterPosition = CheckMonsterPosition(area, hero);
+                    DisplayArea();
+                    monsterPosition = CheckMonsterPosition(hero);
                     if (monsterPosition != "none")
                     {
                         isThereEncounter = true;
                     }
                 }
-                int monsterIndex = GetMonsterEncounteredListIndex(monsterPosition, monsters, hero);
+                int monsterIndex = GetMonsterEncounteredListIndex(monsterPosition, hero);
                 bool hasHeroWon = false;
                 while (hero.Incarnation > 0 && !hasHeroWon)
                 {
-                    hasHeroWon = hero.Encounter(monsters[monsterIndex]);
+                    hasHeroWon = hero.Encounter(_Monsters[monsterIndex]);
                 }
                 if (hasHeroWon)
                 {
-                    area[monsters[monsterIndex].Yindex, monsters[monsterIndex].Xindex] = '_';
-                    monsters.Remove(monsters[monsterIndex]);
+                    area[_Monsters[monsterIndex].Yindex, _Monsters[monsterIndex].Xindex] = '_';
+                    _Monsters.Remove(_Monsters[monsterIndex]);
                 }
-                DisplayArea(area);
+                DisplayArea();
                 Console.WriteLine("Liste de monstres:");
-                foreach (Monster monster in monsters)
+                foreach (Monster monster in _Monsters)
                 {
                     Console.WriteLine("Monster name: " + monster.Name);
                 }
@@ -195,7 +196,7 @@ namespace RPGame.Entities.Games
             }
             return area;
         }
-        private void PopulateArea(char[,] area, List<Monster> monsters)
+        private void PopulateArea()
         {
             int monsterCounter = 0;
             // 1 chance sur 18 peuple souvent le tableau de 10 monstres et ils sont souvent bien repartis
@@ -214,7 +215,7 @@ namespace RPGame.Entities.Games
                             Monster monster = CreateMonster();
                             monster.Xindex = j;
                             monster.Yindex = i;
-                            monsters.Add(monster);
+                            _Monsters.Add(monster);
                             switch (monster)
                             {
                                 case Wolf:
@@ -260,7 +261,7 @@ namespace RPGame.Entities.Games
             }
             return isPopulated;
         }
-        private void DisplayArea(char[,] area)
+        private void DisplayArea()
         {
             for (int i = 0; i < 15; i++)
             {
@@ -271,19 +272,19 @@ namespace RPGame.Entities.Games
                 Console.WriteLine();
             }
         }
-        private string CheckMonsterPosition(char[,] area, Hero hero)
+        private string CheckMonsterPosition(Hero hero)
         {
-            string horizontal = HorizontalCheckMonsterPosition(area, hero);
+            string horizontal = HorizontalCheckMonsterPosition(hero);
             if (horizontal != "none")
                 return horizontal;
 
-            string vertical = VerticalCheckMonsterPosition(area, hero);
+            string vertical = VerticalCheckMonsterPosition(hero);
             if (vertical != "none")
                 return vertical;
 
             return "none";
         }
-        private string HorizontalCheckMonsterPosition(char[,] area, Hero hero)
+        private string HorizontalCheckMonsterPosition(Hero hero)
         {
             // Checking right box.
             if (hero.Xindex < 14)
@@ -300,7 +301,7 @@ namespace RPGame.Entities.Games
             return "none";
 
         }
-        private string VerticalCheckMonsterPosition(char[,] area, Hero hero)
+        private string VerticalCheckMonsterPosition(Hero hero)
         {
             // Checking down box.
             if (hero.Yindex < 14)
@@ -316,37 +317,37 @@ namespace RPGame.Entities.Games
             }
             return "none";
         }
-        private int GetMonsterEncounteredListIndex(string monsterPosition, List<Monster> monsters, Hero hero)
+        private int GetMonsterEncounteredListIndex(string monsterPosition, Hero hero)
         {
             int monsterListIndex = 0;
             switch (monsterPosition)
             {
                 case "right":
-                    foreach (Monster monster in monsters)
+                    foreach (Monster monster in _Monsters)
                     {
                         if (monster.Xindex == hero.Xindex + 1 && monster.Yindex == hero.Yindex)
-                            monsterListIndex = monsters.IndexOf(monster);
+                            monsterListIndex = _Monsters.IndexOf(monster);
                     }
                     break;
                 case "left":
-                    foreach (Monster monster in monsters)
+                    foreach (Monster monster in _Monsters)
                     {
                         if (monster.Xindex == hero.Xindex - 1 && monster.Yindex == hero.Yindex)
-                            monsterListIndex = monsters.IndexOf(monster);
+                            monsterListIndex = _Monsters.IndexOf(monster);
                     }
                     break;
                 case "down":
-                    foreach (Monster monster in monsters)
+                    foreach (Monster monster in _Monsters)
                     {
                         if (monster.Xindex == hero.Xindex && monster.Yindex == hero.Yindex + 1)
-                            monsterListIndex = monsters.IndexOf(monster);
+                            monsterListIndex = _Monsters.IndexOf(monster);
                     }
                     break;
                 case "up":
-                    foreach (Monster monster in monsters)
+                    foreach (Monster monster in _Monsters)
                     {
                         if (monster.Xindex == hero.Xindex && monster.Yindex == hero.Yindex - 1)
-                            monsterListIndex = monsters.IndexOf(monster);
+                            monsterListIndex = _Monsters.IndexOf(monster);
                     }
                     break;
                 default:
