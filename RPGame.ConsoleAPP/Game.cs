@@ -11,8 +11,7 @@ namespace RPGame.Entities.Games
         //Refactor
         public void Run()
         {
-            //Hero hero = GreetPlayer();
-            //hero.DisplayStats();
+            
             List<Monster> monsters = new List<Monster>();
             char[,] area = CreateArea();
             Hero hero = new Human("GenericName");
@@ -26,27 +25,46 @@ namespace RPGame.Entities.Games
             {
                 Console.WriteLine("Monster name: " + monster.Name);
             }
-            bool isThereEncounter = false;
-            string monsterPosition = "";
-            while (!isThereEncounter)
+            while (hero.Incarnation > 0 && monsters.Count > 0)
             {
-                hero.Move(area);
-                DisplayArea(area);
-                monsterPosition = CheckMonsterPosition(area, hero);
-                if (monsterPosition != "none")
+                bool isThereEncounter = false;
+                string monsterPosition = "";
+                while (!isThereEncounter)
                 {
-                    isThereEncounter = true;
+                    hero.Move(area);
+                    DisplayArea(area);
+                    monsterPosition = CheckMonsterPosition(area, hero);
+                    if (monsterPosition != "none")
+                    {
+                        isThereEncounter = true;
+                    }
+                }
+                int monsterIndex = GetMonsterEncounteredListIndex(monsterPosition, monsters, hero);
+                bool hasHeroWon = false;
+                while (hero.Incarnation > 0 && !hasHeroWon)
+                {
+                    hasHeroWon = hero.Encounter(monsters[monsterIndex]);
+                }
+                if (hasHeroWon)
+                {
+                    area[monsters[monsterIndex].Yindex, monsters[monsterIndex].Xindex] = '_';
+                    monsters.Remove(monsters[monsterIndex]);
+                }
+                DisplayArea(area);
+                Console.WriteLine("Liste de monstres:");
+                foreach (Monster monster in monsters)
+                {
+                    Console.WriteLine("Monster name: " + monster.Name);
                 }
             }
-            Monster monsterEncountered = GetMonsterEncountered(monsterPosition, monsters, hero);
-            hero.Encounter(monsterEncountered);
-            // TODO: Recombattre le même monstre si c'est le héro qui meurt.
-            // Retirer le monstre de la liste si le monstre meurt.
-            // Boucler les déplacements et les rencontres jusqu'à ce que le héro n'ait plus de vie...
-            // Ou jusqu'à ce que la liste de monstres soit vide.
 
+            
+            
+            // Prévoir une fuite possible.
 
-
+            // Ancien programme.
+            //Hero hero = GreetPlayer();
+            //hero.DisplayStats();
             //HeroService heroService = new HeroService();
             //BattleService battleService = new BattleService();
             //while (hero.Incarnation > 0)
@@ -341,6 +359,45 @@ namespace RPGame.Entities.Games
                     break;
             }
             return monsterEncountered;
+        }
+        private int GetMonsterEncounteredListIndex(string monsterPosition, List<Monster> monsters, Hero hero)
+        {
+            int monsterListIndex = 0;
+            switch (monsterPosition)
+            {
+                case "right":
+                    foreach (Monster monster in monsters)
+                    {
+                        if (monster.Xindex == hero.Xindex + 1 && monster.Yindex == hero.Yindex)
+                            monsterListIndex = monsters.IndexOf(monster);
+                    }
+                    break;
+                case "left":
+                    foreach (Monster monster in monsters)
+                    {
+                        if (monster.Xindex == hero.Xindex - 1 && monster.Yindex == hero.Yindex)
+                            monsterListIndex = monsters.IndexOf(monster);
+                    }
+                    break;
+                case "down":
+                    foreach (Monster monster in monsters)
+                    {
+                        if (monster.Xindex == hero.Xindex && monster.Yindex == hero.Yindex + 1)
+                            monsterListIndex = monsters.IndexOf(monster);
+                    }
+                    break;
+                case "up":
+                    foreach (Monster monster in monsters)
+                    {
+                        if (monster.Xindex == hero.Xindex && monster.Yindex == hero.Yindex - 1)
+                            monsterListIndex = monsters.IndexOf(monster);
+                    }
+                    break;
+                default:
+                    Console.WriteLine("Pas trouvé de monstre.");
+                    break;
+            }
+            return monsterListIndex;
         }
     }
 }
