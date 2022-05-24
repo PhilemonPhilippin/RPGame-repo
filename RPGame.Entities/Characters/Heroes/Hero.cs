@@ -229,28 +229,6 @@ namespace RPGame.Entities.Characters.Heroes
         }
         public void Move(char[,] area)
         {
-            string direction = AskDirection();
-            switch (direction)
-            {
-                case "left":
-                    MoveLeft(area);
-                    break;
-                case "right":
-                    MoveRight(area);
-                    break;
-                case "up":
-                    MoveUp(area);
-                    break;
-                case "down":
-                    MoveDown(area);
-                    break;
-                default:
-                    Console.WriteLine("No move");
-                    break;
-            }
-        }
-        private string AskDirection()
-        {
             string answer = "";
             do
             {
@@ -258,7 +236,28 @@ namespace RPGame.Entities.Characters.Heroes
                 Console.WriteLine("Write 'left','right', 'up' or 'down'...");
                 answer = Console.ReadLine().ToLower();
             } while (answer != "left" && answer != "right" && answer != "up" && answer != "down");
-            return answer;
+            switch (answer)
+            {
+                case "left":
+                    MoveLeft(area);
+                    Console.WriteLine("Moving left.");
+                    break;
+                case "right":
+                    MoveRight(area);
+                    Console.WriteLine("Moving right.");
+                    break;
+                case "up":
+                    MoveUp(area);
+                    Console.WriteLine("Moving up.");
+                    break;
+                case "down":
+                    MoveDown(area);
+                    Console.WriteLine("Moving down.");
+                    break;
+                default:
+                    Console.WriteLine("Not moving.");
+                    break;
+            }
         }
 
         private void MoveLeft(char[,] area)
