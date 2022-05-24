@@ -6,9 +6,13 @@ namespace RPGame.Entities.Games
 {
     public class Game
     {
-        //TODO: Zones
-        //Weapons, Shop
-        //Refactor
+        // TODO: Zones.
+        // Weapons, Shop.
+        // Refactor.
+        // Prévoir une fuite possible.
+        // Rétablir les services.
+        // Considérer une interface pour l'utilisation des services.
+        // Rendre static : la zone et la liste de monstres. Eventuellement.
         public void Run()
         {
             
@@ -58,9 +62,7 @@ namespace RPGame.Entities.Games
                 }
             }
 
-            
-            
-            // Prévoir une fuite possible.
+
 
             // Ancien programme.
             //Hero hero = GreetPlayer();
@@ -258,13 +260,6 @@ namespace RPGame.Entities.Games
             }
             return isPopulated;
         }
-
-        private bool AreAllMonstersDead()
-        {
-            bool areAllMonstersDead = false;
-            // Vérifier que tous les monstres sont morts
-            return areAllMonstersDead;
-        }
         private void DisplayArea(char[,] area)
         {
             for (int i = 0; i < 15; i++)
@@ -320,45 +315,6 @@ namespace RPGame.Entities.Games
                     return "up";
             }
             return "none";
-        }
-        private Monster GetMonsterEncountered(string monsterPosition, List<Monster> monsters, Hero hero)
-        {
-            Monster monsterEncountered = new Monster();
-            switch (monsterPosition)
-            {
-                case "right":
-                    foreach (Monster monster in monsters)
-                    {
-                        if (monster.Xindex == hero.Xindex + 1 && monster.Yindex == hero.Yindex)
-                            monsterEncountered = monster;
-                    }
-                    break;
-                case "left":
-                    foreach (Monster monster in monsters)
-                    {
-                        if (monster.Xindex == hero.Xindex - 1 && monster.Yindex == hero.Yindex)
-                            monsterEncountered = monster;
-                    }
-                    break;
-                case "down":
-                    foreach (Monster monster in monsters)
-                    {
-                        if (monster.Xindex == hero.Xindex && monster.Yindex == hero.Yindex + 1)
-                            monsterEncountered = monster;
-                    }
-                    break;
-                case "up":
-                    foreach (Monster monster in monsters)
-                    {
-                        if (monster.Xindex == hero.Xindex && monster.Yindex == hero.Yindex - 1)
-                            monsterEncountered = monster;
-                    }
-                    break;
-                default:
-                    Console.WriteLine("Pas trouvé de monstre.");
-                    break;
-            }
-            return monsterEncountered;
         }
         private int GetMonsterEncounteredListIndex(string monsterPosition, List<Monster> monsters, Hero hero)
         {
