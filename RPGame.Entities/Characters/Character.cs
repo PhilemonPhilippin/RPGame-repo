@@ -42,7 +42,7 @@ namespace RPGame.Entities.Characters
 
         public int Gold { get; set; }
         public int Leather { get; set; }
-
+        public abstract void DisplayStats();
         public double CalculateStamina()
         {
             int[] diceResults = new int[4];

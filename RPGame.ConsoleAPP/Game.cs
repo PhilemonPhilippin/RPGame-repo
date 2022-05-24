@@ -7,10 +7,9 @@ namespace RPGame.Entities.Games
     public class Game
     {
         // TODO:
-        // Prévoir une fuite possible.
-        // Considérer une interface pour l'utilisation des services.
         // Rétablir les services.
         // Refactor.
+        // Considérer une interface pour l'utilisation des services.
         // Zones.
         // Weapons, Shop.
         private static List<Monster> _Monsters = new List<Monster>();
@@ -19,7 +18,12 @@ namespace RPGame.Entities.Games
         {
             
             area = CreateArea();
-            Hero hero = new Human("GenericName");
+            Hero hero = GreetPlayer();
+            hero.DisplayStats();
+            HeroService heroService = new HeroService();
+            BattleService battleService = new BattleService();
+
+
             area[0, 0] = 'H';
             hero.Xindex = 0;
             hero.Yindex = 0;
@@ -45,11 +49,9 @@ namespace RPGame.Entities.Games
                     }
                 }
                 int monsterIndex = GetMonsterEncounteredListIndex(monsterPosition, hero);
-                bool hasHeroWon = false;
-                while (hero.Incarnation > 0 && !hasHeroWon)
-                {
-                    hasHeroWon = hero.Encounter(_Monsters[monsterIndex]);
-                }
+                bool hasHeroWon = hero.Encounter(_Monsters[monsterIndex]);
+                heroService.UpdateHero(hero);
+                battleService.RegisterBattle(hero, _Monsters[monsterIndex], hasHeroWon);
                 if (hasHeroWon)
                 {
                     area[_Monsters[monsterIndex].Yindex, _Monsters[monsterIndex].Xindex] = '_';
@@ -91,7 +93,7 @@ namespace RPGame.Entities.Games
             } while (answer != "new" && answer != "load");
             Hero hero;
             if (answer == "new")
-                hero = CreateHero();
+                hero = CreateNewHero();
             else
                 hero = LoadHero();
             return hero;
@@ -119,11 +121,22 @@ namespace RPGame.Entities.Games
             return hero;
         }
 
-        private Hero CreateHero()
+        private Hero CreateNewHero()
         {
             string heroName = GetHeroName();
             string race = GetHeroRace(heroName);
             Hero hero = CreateHero(heroName, race);
+            return hero;
+        }
+        private Hero CreateHero(string heroName, string race)
+        {
+            Hero hero;
+            if (race == "dwarf")
+                hero = new Dwarf(heroName);
+            else
+                hero = new Human(heroName);
+            HeroService service = new HeroService();
+            service.InsertHero(hero);
             return hero;
         }
         private string GetHeroName()
@@ -148,18 +161,6 @@ namespace RPGame.Entities.Games
             } while (race != "dwarf" && race != "human");
             return race;
         }
-        private Hero CreateHero(string heroName, string race)
-        {
-            Hero hero;
-            if (race == "dwarf")
-                hero = new Dwarf(heroName);
-            else
-                hero = new Human(heroName);
-            HeroService service = new HeroService();
-            service.InsertHero(hero);
-            return hero;
-        }
-
         private Monster CreateMonster()
         {
             Monster monster;

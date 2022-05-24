@@ -25,7 +25,7 @@ namespace RPGame.Entities.Characters.Heroes
         public double Experience { get; set; }
         public int Level { get; set; }
         public int Incarnation { get; set; }
-        public void DisplayStats()
+        public override void DisplayStats()
         {
             Console.WriteLine($"Your name is {Name}, you have {Stamina} Stamina, {Health} Health, {Strength} Strength and {Block} Block.");
             Console.WriteLine($"You also have {Mana} Mana, {ManaPotion} Mana potions, {Incarnation} Incarnations, {Gold} Gold and {Leather} leather.");

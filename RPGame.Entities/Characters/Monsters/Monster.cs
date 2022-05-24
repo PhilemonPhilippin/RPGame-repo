@@ -31,7 +31,7 @@ namespace RPGame.Entities.Characters.Monsters
                     break;
             }
         }
-        public void DisplayStats()
+        public override void DisplayStats()
         {
             Console.WriteLine($"The monster name is {Name}, he has {Stamina} Stamina, {Health} Health, {Strength} Strength and {Block} Block.");
             Console.WriteLine($"He also has {Gold} Gold and {Leather} leather.");
