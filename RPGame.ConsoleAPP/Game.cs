@@ -7,15 +7,13 @@ namespace RPGame.Entities.Games
     public class Game
     {
         // TODO:
-        // Refactor.
-        // Considérer une interface pour l'utilisation des services.
         // Zones.
         // Weapons, Shop.
         private static List<Monster> _Monsters = new List<Monster>();
-        private static char[,] area;
+        private static char[,] _Area;
         public void Run()
         {
-            area = CreateArea();
+            _Area = CreateArea();
             Hero hero = GreetPlayer();
             hero.DisplayStats();
             HeroService heroService = new HeroService();
@@ -32,7 +30,7 @@ namespace RPGame.Entities.Games
                 string monsterPosition = "";
                 while (!isThereEncounter)
                 {
-                    hero.Move(area);
+                    hero.Move(_Area);
                     DisplayArea();
                     monsterPosition = CheckMonsterPosition(hero);
                     if (monsterPosition != "none")
@@ -46,7 +44,7 @@ namespace RPGame.Entities.Games
                 battleService.RegisterBattle(hero, _Monsters[monsterIndex], hasHeroWon);
                 if (hasHeroWon)
                 {
-                    area[_Monsters[monsterIndex].Yindex, _Monsters[monsterIndex].Xindex] = '_';
+                    _Area[_Monsters[monsterIndex].Yindex, _Monsters[monsterIndex].Xindex] = '_';
                     _Monsters.Remove(_Monsters[monsterIndex]);
                 }
                 DisplayArea();
@@ -176,13 +174,13 @@ namespace RPGame.Entities.Games
             // Checking right box.
             if (hero.Xindex < 14)
             {
-                if (area[hero.Yindex, hero.Xindex + 1] != '_')
+                if (_Area[hero.Yindex, hero.Xindex + 1] != '_')
                     return "right";
             }
             // Checking left box.
             if (hero.Xindex > 0)
             {
-                if (area[hero.Yindex, hero.Xindex - 1] != '_')
+                if (_Area[hero.Yindex, hero.Xindex - 1] != '_')
                     return "left";
             }
             return "none";
@@ -193,13 +191,13 @@ namespace RPGame.Entities.Games
             // Checking down box.
             if (hero.Yindex < 14)
             {
-                if (area[hero.Yindex + 1, hero.Xindex] != '_')
+                if (_Area[hero.Yindex + 1, hero.Xindex] != '_')
                     return "down";
             }
             // Checking up box.
             if (hero.Yindex > 0)
             {
-                if (area[hero.Yindex - 1, hero.Xindex] != '_')
+                if (_Area[hero.Yindex - 1, hero.Xindex] != '_')
                     return "up";
             }
             return "none";
@@ -249,7 +247,7 @@ namespace RPGame.Entities.Games
             {
                 for (int j = 0; j < 15; j++)
                 {
-                    Console.Write(area[i, j]);
+                    Console.Write(_Area[i, j]);
                 }
                 Console.WriteLine();
             }
@@ -259,7 +257,7 @@ namespace RPGame.Entities.Games
             bool isPopulated = false;
             if (j > 1)
             {
-                if (area[i, j - 1] != '_' || area[i, j - 2] != '_')
+                if (_Area[i, j - 1] != '_' || _Area[i, j - 2] != '_')
                 {
                     isPopulated = true;
                 }
@@ -271,7 +269,7 @@ namespace RPGame.Entities.Games
             bool isPopulated = false;
             if (i > 1)
             {
-                if (area[i - 1, j] != '_' || area[i - 2, j] != '_')
+                if (_Area[i - 1, j] != '_' || _Area[i - 2, j] != '_')
                 {
                     isPopulated = true;
                 }
@@ -301,16 +299,16 @@ namespace RPGame.Entities.Games
                             switch (monster)
                             {
                                 case Wolf:
-                                    area[i, j] = 'W';
+                                    _Area[i, j] = 'W';
                                     break;
                                 case Goblin:
-                                    area[i, j] = 'G';
+                                    _Area[i, j] = 'G';
                                     break;
                                 case Orc:
-                                    area[i, j] = 'O';
+                                    _Area[i, j] = 'O';
                                     break;
                                 default:
-                                    area[i, j] = 'D';
+                                    _Area[i, j] = 'D';
                                     break;
                             }
                             monsterCounter++;
