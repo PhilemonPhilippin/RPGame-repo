@@ -264,47 +264,91 @@ namespace RPGame.Entities.Characters.Heroes
         {
             if (Xindex > 0)
             {
-                area[Yindex, Xindex] = '_';
-                Xindex--;
-                area[Yindex, Xindex] = 'H';
+                if (area[Yindex, Xindex - 1] == '_')
+                {
+                    area[Yindex, Xindex] = '_';
+                    Xindex--;
+                    area[Yindex, Xindex] = 'H';
+                }
+                else
+                {
+                    Console.WriteLine("You can't move left.");
+                    Console.WriteLine("A monster is blocking your way");
+                }
             }
             else
-                Console.WriteLine("You can't move left to leave the area");
+            {
+                Console.WriteLine("You can't move left.");
+                Console.WriteLine("You can't leave the area.");
+            }
         }
         private void MoveRight(char[,] area)
         {
             if (Xindex < 14)
             {
-                area[Yindex, Xindex] = '_';
-                Xindex++;
-                area[Yindex, Xindex] = 'H';
+                if (area[Yindex, Xindex + 1] == '_')
+                {
+                    area[Yindex, Xindex] = '_';
+                    Xindex++;
+                    area[Yindex, Xindex] = 'H';
+                }
+                else
+                {
+                    Console.WriteLine("You can't move right.");
+                    Console.WriteLine("A monster is blocking your way");
+                }
             }
             else
-                Console.WriteLine("You can't move right to leave the area");
+            {
+                Console.WriteLine("You can't move right.");
+                Console.WriteLine("You can't leave the area.");
+            }
 
         }
         private void MoveUp(char[,] area)
         {
             if (Yindex > 0)
             {
-                area[Yindex, Xindex] = '_';
-                Yindex--;
-                area[Yindex, Xindex] = 'H';
+                if (area[Yindex - 1, Xindex] == '_')
+                {
+                    area[Yindex, Xindex] = '_';
+                    Yindex--;
+                    area[Yindex, Xindex] = 'H';
+                }
+                else
+                {
+                    Console.WriteLine("You can't move up.");
+                    Console.WriteLine("A monster is blocking your way");
+                }
             }
             else
-                Console.WriteLine("You can't move up to leave the area");
+            {
+                Console.WriteLine("You can't move up.");
+                Console.WriteLine("You can't leave the area.");
+            }
 
         }
         private void MoveDown(char[,] area)
         {
             if (Yindex < 14)
             {
-                area[Yindex, Xindex] = '_';
-                Yindex++;
-                area[Yindex, Xindex] = 'H';
+                if (area[Yindex + 1, Xindex] == '_')
+                {
+                    area[Yindex, Xindex] = '_';
+                    Yindex++;
+                    area[Yindex, Xindex] = 'H';
+                }
+                else
+                {
+                    Console.WriteLine("You can't move down.");
+                    Console.WriteLine("A monster is blocking your way");
+                }
             }
             else
-                Console.WriteLine("You can't move down to leave the area");
+            {
+                Console.WriteLine("You can't move down.");
+                Console.WriteLine("You can't leave the area.");
+            }
         }
     }
 }
