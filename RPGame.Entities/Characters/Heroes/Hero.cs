@@ -271,16 +271,10 @@ namespace RPGame.Entities.Characters.Heroes
                     area[Yindex, Xindex] = 'H';
                 }
                 else
-                {
-                    Console.WriteLine("You can't move left.");
-                    Console.WriteLine("A monster is blocking your way");
-                }
+                    Console.WriteLine("You can't move left. A monster is blocking your way.");
             }
             else
-            {
-                Console.WriteLine("You can't move left.");
-                Console.WriteLine("You can't leave the area.");
-            }
+                Console.WriteLine("You can't move left. You can't leave the area.");
         }
         private void MoveRight(char[,] area)
         {
@@ -293,16 +287,10 @@ namespace RPGame.Entities.Characters.Heroes
                     area[Yindex, Xindex] = 'H';
                 }
                 else
-                {
-                    Console.WriteLine("You can't move right.");
-                    Console.WriteLine("A monster is blocking your way");
-                }
+                    Console.WriteLine("You can't move right. A monster is blocking your way.");
             }
             else
-            {
-                Console.WriteLine("You can't move right.");
-                Console.WriteLine("You can't leave the area.");
-            }
+                Console.WriteLine("You can't move right. You can't leave the area.");
 
         }
         private void MoveUp(char[,] area)
@@ -316,16 +304,10 @@ namespace RPGame.Entities.Characters.Heroes
                     area[Yindex, Xindex] = 'H';
                 }
                 else
-                {
-                    Console.WriteLine("You can't move up.");
-                    Console.WriteLine("A monster is blocking your way");
-                }
+                    Console.WriteLine("You can't move up. A monster is blocking your way.");
             }
             else
-            {
-                Console.WriteLine("You can't move up.");
-                Console.WriteLine("You can't leave the area.");
-            }
+                Console.WriteLine("You can't move up. You can't leave the area.");
 
         }
         private void MoveDown(char[,] area)
@@ -339,16 +321,10 @@ namespace RPGame.Entities.Characters.Heroes
                     area[Yindex, Xindex] = 'H';
                 }
                 else
-                {
-                    Console.WriteLine("You can't move down.");
-                    Console.WriteLine("A monster is blocking your way");
-                }
+                    Console.WriteLine("You can't move down. A monster is blocking your way.");
             }
             else
-            {
-                Console.WriteLine("You can't move down.");
-                Console.WriteLine("You can't leave the area.");
-            }
+                Console.WriteLine("You can't move down. You can't leave the area.");
         }
     }
 }
